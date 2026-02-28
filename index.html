@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0d0f14">
+<title>Airport Bar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0d0f14;--s1:#161a23;--s2:#1e2330;--border:#2a3045;
+  --gold:#c9a84c;--gold2:#e8c97a;--red:#e05c5c;--green:#5cb88a;
+  --text:#e8eaf0;--muted:#7a8299;--r:14px;
+  --head:'Playfair Display',serif;--body:'Nunito',sans-serif;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--body)}
+#app{max-width:430px;height:100vh;margin:0 auto;display:flex;flex-direction:column;background:var(--bg);position:relative;overflow:hidden}
+
+/* HEADER */
+.hdr{background:var(--s1);border-bottom:1px solid var(--border);padding:14px 18px 10px;flex-shrink:0}
+.hdr-top{display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--head);font-size:22px;color:var(--gold);letter-spacing:.02em}
+.logo em{color:var(--muted);font-style:italic;font-size:18px}
+.ubadge{background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--muted);cursor:pointer;font-family:var(--body)}
+.ubadge.owner{color:var(--gold);border-color:var(--gold)}
+
+/* NAV */
+.nav{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{flex:none;padding:10px 15px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--body);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+.nav-btn.on{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* PAGE */
+.page{flex:1;overflow-y:auto;padding:16px;padding-bottom:24px;-webkit-overflow-scrolling:touch}
+
+/* CARDS */
+.card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:15px;margin-bottom:12px}
+.ctitle{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+
+/* SECTION */
+.stitle{font-family:var(--head);font-size:20px;margin-bottom:3px}
+.ssub{font-size:12px;color:var(--muted);margin-bottom:14px}
+
+/* STATS */
+.stats2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.scard{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px}
+.slabel{font-size:11px;color:var(--muted);margin-bottom:4px}
+.sval{font-size:17px;font-weight:700}
+.sval.gold{color:var(--gold2)}.sval.green{color:var(--green)}.sval.red{color:var(--red)}
+
+/* INPUTS */
+.ig{margin-bottom:11px}
+.il{font-size:12px;color:var(--muted);margin-bottom:5px;display:block}
+input[type=text],input[type=number],input[type=date],select{
+  width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;
+  padding:10px 12px;color:var(--text);font-family:var(--body);font-size:14px;
+  outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none
+}
+input:focus,select:focus{border-color:var(--gold)}
+input::placeholder{color:var(--muted)}
+select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%237a8299' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+
+/* BUTTONS */
+.btn{border:none;border-radius:8px;padding:11px 18px;font-family:var(--body);font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.btn:active{transform:scale(.97)}
+.btn-p{background:var(--gold);color:#0d0f14}
+.btn-g{background:var(--s2);color:var(--text);border:1px solid var(--border)}
+.btn-d{background:var(--red);color:#fff}
+.btn-s{background:var(--green);color:#0d0f14}
+.btn-w{width:100%}
+.btn-sm{padding:7px 12px;font-size:12px}
+
+/* ITEM ROW */
+.irow{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px}
+.iname{font-size:15px;font-weight:600;margin-bottom:3px}
+.imeta{font-size:12px;color:var(--muted)}
+.tag{display:inline-block;border-radius:4px;padding:2px 7px;font-size:10px;margin-left:5px;border:1px solid}
+.tag-w{color:#7eb3f5;border-color:#7eb3f5}.tag-d{color:#5cb88a;border-color:#5cb88a}.tag-dr{color:#a78bfa;border-color:#a78bfa}.tag-off{color:var(--red);border-color:var(--red)}
+
+/* ROW LAYOUT */
+.irow-flex{display:flex;gap:8px;align-items:flex-end}
+.irow-flex .ig{flex:1;margin-bottom:0}
+.ro-static{background:var(--bg);color:var(--gold2);font-weight:700;border-radius:8px;padding:10px 12px;font-size:14px;border:1px solid var(--border);min-width:0}
+
+/* EXPENSE */
+.exrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.exrow:last-child{border-bottom:none}
+.exname{flex:1;font-size:14px}
+.examt{font-size:13px;font-weight:600;color:var(--gold2)}
+.exinput{width:110px;text-align:right}
+
+/* SUMMARY ROWS */
+.sumrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+.sumrow:last-child{border-bottom:none}
+.sumrow.bold{font-weight:700;font-size:15px;color:var(--gold2)}
+.sumrow.exp{color:var(--red)}
+.sumrow.profit{font-weight:800;font-size:17px;color:var(--green)}
+.sumrow.loss{font-weight:800;font-size:17px;color:var(--red)}
+
+/* DATE ROW */
+.drow{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+.drow input{flex:1;max-width:180px}
+.dlabel{font-size:13px;color:var(--muted)}
+
+/* DIVIDER */
+.div{height:1px;background:var(--border);margin:14px 0}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--s1);border-radius:20px 20px 0 0;padding:24px;width:100%;max-width:430px;max-height:88vh;overflow-y:auto}
+.modal-title{font-family:var(--head);font-size:20px;margin-bottom:16px}
+
+/* LOGIN */
+.login{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:var(--bg)}
+.login-logo{font-family:var(--head);font-size:40px;color:var(--gold);margin-bottom:4px}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:40px;letter-spacing:.05em}
+.login-card{width:100%;max-width:340px}
+.role-btn{width:100%;padding:18px;font-size:16px;margin-bottom:12px;border-radius:12px}
+
+/* PIN */
+.pin-dots{display:flex;gap:12px;justify-content:center;margin:20px 0}
+.pdot{width:14px;height:14px;border-radius:50%;background:var(--border);transition:background .2s}
+.pdot.on{background:var(--gold)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+.kbtn{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:18px;font-size:22px;color:var(--text);cursor:pointer;text-align:center;font-family:var(--body);font-weight:500;transition:background .15s}
+.kbtn:active{background:var(--border)}
+.kbtn.gold{background:var(--gold);color:#0d0f14;border-color:var(--gold)}
+.kbtn.invis{visibility:hidden}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--s1);border:1px solid var(--gold);border-radius:20px;padding:10px 22px;font-size:13px;color:var(--gold2);z-index:500;pointer-events:none;opacity:0;transition:opacity .3s}
+.toast.show{opacity:1}
+
+/* NO DATA */
+.nodata{text-align:center;color:var(--muted);padding:28px 0;font-size:14px}
+
+/* DRAUGHT */
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* MONTH PILLS */
+.mpill{display:inline-block;background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;margin:3px;color:var(--muted);transition:all .2s}
+.mpill.on{background:var(--gold);color:#0d0f14;border-color:var(--gold);font-weight:700}
+
+/* HISTORY CARD */
+.hcard{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:13px;margin-bottom:8px}
+
+/* CONFIRM BTN */
+.confirm-strip{background:var(--s1);border-top:1px solid var(--border);padding:12px 16px;flex-shrink:0}
+
+/* ERROR */
+.pin-error{text-align:center;color:var(--red);font-size:13px;margin-top:8px;min-height:20px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// STORAGE (localStorage — works 100% offline, no internet)
+// ═══════════════════════════════════════════════════════
+const DB = {
+  get(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch{return null}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{showToast('Storage full!')}},
+  del(k){try{localStorage.removeItem(k)}catch{}},
+  keys(){return Object.keys(localStorage)}
+};
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let STATE = {
+  user: null,         // {role:'owner'|'staff'}
+  tab: 'daily',
+  items: [],
+  date: todayStr(),
+  dayData: null,
+  expenses: {},
+  monthlyExp: [],
+  histMonth: todayStr().slice(0,7),
+  modal: null,        // null | 'addItem' | 'addMonthly'
+  pinRole: null,
+  pinVal: '',
+  pinError: '',
+  loaded: false
+};
+
+const PINS = {owner:'1234', staff:'0000'};
+const FIXED_EXP = ['Lunch','Police Bribe','Cleaning','Transport','Other'];
+
+function todayStr(){
+  const d=new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function monthOf(d){return d.slice(0,7)}
+function fmtMoney(n){return 'Ksh '+(+n||0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function fmtQty(n){const x=+n||0;return Number.isInteger(x)?String(x):x.toFixed(2)}
+function emptyStock(){return{opening:0,added:0,sold:0,closing:0,draughtSold:{},draughtRevenue:0}}
+function buildEmptyDay(items,date){
+  const stocks={};
+  items.forEach(it=>{stocks[it.id]=emptyStock()});
+  return{date,stocks};
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+function init(){
+  let items=DB.get('items');
+  if(!items){items=defaultItems();DB.set('items',items)}
+  STATE.items=items;
+  STATE.monthlyExp=DB.get('monthly_expenses')||[];
+  loadDayData(STATE.date);
+  STATE.loaded=true;
+  render();
+}
+
+function defaultItems(){
+  return[
+    {id:'tusker',name:'Tusker Lager',type:'whole',price:300,active:true,draughtSizes:[]},
+    {id:'guinness',name:'Guinness',type:'whole',price:350,active:true,draughtSizes:[]},
+    {id:'whitecap',name:'White Cap',type:'whole',price:300,active:true,draughtSizes:[]},
+    {id:'hansa',name:'Hansa',type:'whole',price:300,active:true,draughtSizes:[]},
+    {id:'heineken',name:'Heineken',type:'whole',price:400,active:true,draughtSizes:[]},
+    {id:'vodka',name:'Vodka (KK)',type:'decimal',price:1200,active:true,draughtSizes:[]},
+    {id:'whisky',name:'Whisky (B&W)',type:'decimal',price:1600,active:true,draughtSizes:[]},
+    {id:'brandy',name:'Brandy (Konyagi)',type:'decimal',price:900,active:true,draughtSizes:[]},
+    {id:'draught',name:'Tusker Draught',type:'draught',price:0,active:true,draughtSizes:[{price:50},{price:70},{price:120}]},
+    {id:'softs',name:'Soft Drinks',type:'whole',price:100,active:true,draughtSizes:[]},
+    {id:'water',name:'Water (500ml)',type:'whole',price:50,active:true,draughtSizes:[]},
+  ];
+}
+
+function loadDayData(date){
+  let dd=DB.get('day:'+date);
+  if(!dd){
+    // Try to carry over closing stock from previous day as opening
+    dd=buildEmptyDay(STATE.items,date);
+    // Find previous day
+    const prev=getPrevDay(date);
+    if(prev){
+      const prevDD=DB.get('day:'+prev);
+      if(prevDD){
+        STATE.items.forEach(it=>{
+          const ps=prevDD.stocks?.[it.id];
+          if(ps && dd.stocks[it.id]!==undefined){
+            dd.stocks[it.id].opening=ps.closing||0;
+            dd.stocks[it.id].closing=ps.closing||0;
+          }
+        });
+      }
+    }
+  }
+  STATE.dayData=dd;
+  STATE.expenses=DB.get('expenses:'+date)||{};
+}
+
+function getPrevDay(dateStr){
+  const d=new Date(dateStr+'T12:00:00');
+  d.setDate(d.getDate()-1);
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+
+function saveDayData(){
+  DB.set('day:'+STATE.date,STATE.dayData);
+}
+function saveExpenses(){
+  DB.set('expenses:'+STATE.date,STATE.expenses);
+}
+
+// ═══════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════
+let toastTimer=null;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  if(!t)return;
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════════
+function render(){
+  const app=document.getElementById('app');
+  if(!app)return;
+  if(!STATE.loaded){app.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:var(--gold);font-family:var(--body)">Loading…</div>';return}
+  if(!STATE.user){app.innerHTML=renderLogin();attachLoginEvents();return}
+  app.innerHTML=renderApp();
+  attachAppEvents();
+}
+
+// ─── LOGIN ───────────────────────────────────────────
+function renderLogin(){
+  if(!STATE.pinRole){
+    return `<div class="login">
+      <div class="login-logo">Airport Bar</div>
+      <div class="login-sub">BAR MANAGEMENT SYSTEM</div>
+      <div class="login-card">
+        <button class="btn btn-p role-btn" onclick="selectRole('owner')">👑 Sign in as Owner</button>
+        <button class="btn btn-g role-btn" onclick="selectRole('staff')">👤 Sign in as Staff</button>
+        <div style="margin-top:20px;text-align:center;font-size:11px;color:var(--muted)">Default PINs — Owner: 1234 &nbsp;·&nbsp; Staff: 0000</div>
+      </div>
+    </div>`;
+  }
+  const dots=[0,1,2,3].map(i=>`<div class="pdot ${i<STATE.pinVal.length?'on':''}"></div>`).join('');
+  const keys=['1','2','3','4','5','6','7','8','9','','0','del'];
+  const kpad=keys.map(k=>{
+    if(k==='')return '<div class="kbtn invis"></div>';
+    if(k==='del')return `<div class="kbtn" onclick="pinKey('del')">⌫</div>`;
+    return `<div class="kbtn" onclick="pinKey('${k}')">${k}</div>`;
+  }).join('');
+  return `<div class="login">
+    <div class="login-logo">Airport Bar</div>
+    <div class="login-sub">${STATE.pinRole==='owner'?'OWNER':'STAFF'} PIN</div>
+    <div class="login-card">
+      <div class="pin-dots">${dots}</div>
+      <div class="pin-error">${STATE.pinError}</div>
+      <div class="keypad">${kpad}</div>
+      <button class="btn btn-g btn-w" style="margin-top:14px" onclick="backToRoles()">← Back</button>
+    </div>
+  </div>`;
+}
+
+function selectRole(role){STATE.pinRole=role;STATE.pinVal='';STATE.pinError='';render()}
+function backToRoles(){STATE.pinRole=null;STATE.pinVal='';STATE.pinError='';render()}
+function pinKey(k){
+  if(k==='del'){STATE.pinVal=STATE.pinVal.slice(0,-1);STATE.pinError='';render();return}
+  if(STATE.pinVal.length>=4)return;
+  STATE.pinVal+=k;
+  render();
+  if(STATE.pinVal.length===4){
+    setTimeout(()=>{
+      if(STATE.pinVal===PINS[STATE.pinRole]){
+        STATE.user={role:STATE.pinRole};STATE.pinRole=null;STATE.pinVal='';STATE.pinError='';render();
+      } else {
+        STATE.pinError='Wrong PIN. Try again.';STATE.pinVal='';render();
+      }
+    },200);
+  }
+}
+
+function attachLoginEvents(){}
+
+// ─── MAIN APP ───────────────────────────────────────
+function renderApp(){
+  const {user,tab}=STATE;
+  const tabs=user.role==='owner'
+    ?[{id:'daily',l:'Daily Entry'},{id:'summary',l:'Summary'},{id:'history',l:'History'},{id:'items',l:'Items'},{id:'monthly',l:'Monthly Exp'}]
+    :[{id:'daily',l:'Daily Entry'},{id:'summary',l:'Summary'}];
+
+  const navBtns=tabs.map(t=>`<button class="nav-btn ${tab===t.id?'on':''}" data-tab="${t.id}">${t.l}</button>`).join('');
+
+  let pageContent='';
+  if(tab==='daily') pageContent=renderDaily();
+  else if(tab==='summary') pageContent=renderSummary();
+  else if(tab==='history') pageContent=renderHistory();
+  else if(tab==='items') pageContent=renderItems();
+  else if(tab==='monthly') pageContent=renderMonthly();
+
+  let modalHtml='';
+  if(STATE.modal==='addItem') modalHtml=renderAddItemModal();
+  else if(STATE.modal==='addMonthly') modalHtml=renderAddMonthlyModal();
+
+  return `
+    <div class="hdr">
+      <div class="hdr-top">
+        <div class="logo">Airport <em>Bar</em></div>
+        <div class="ubadge ${user.role}" onclick="signOut()">${user.role==='owner'?'👑 Owner':'👤 Staff'} · Sign out</div>
+      </div>
+    </div>
+    <nav class="nav">${navBtns}</nav>
+    <div class="page" id="mainPage">${pageContent}</div>
+    ${modalHtml}
+  `;
+}
+
+function attachAppEvents(){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>{
+    STATE.tab=b.dataset.tab;
+    if(b.dataset.tab==='history'){}
+    render();
+  }));
+}
+
+function signOut(){STATE.user=null;render()}
+
+// ─── DAILY ENTRY ───────────────────────────────────
+function renderDaily(){
+  const activeItems=STATE.items.filter(i=>i.active!==false);
+  const dateStr=STATE.date;
+  const isToday=dateStr===todayStr();
+
+  let rows=activeItems.map(item=>{
+    const s=STATE.dayData?.stocks?.[item.id]||emptyStock();
+    const tagClass=item.type==='whole'?'tag-w':item.type==='decimal'?'tag-d':'tag-dr';
+    const tagLabel=item.type==='whole'?'Whole':item.type==='decimal'?'Decimal':'Draught';
+
+    let inputsHtml='';
+    if(item.type!=='draught'){
+      const step=item.type==='decimal'?'0.25':'1';
+      inputsHtml=`
+        <div class="irow-flex">
+          <div class="ig"><label class="il">Added</label>
+            <input type="number" min="0" step="${step}" value="${s.added||''}" placeholder="0"
+              oninput="updateStock('${item.id}','added',this.value)" onblur="updateStock('${item.id}','added',this.value)">
+          </div>
+          <div class="ig"><label class="il">Sold</label>
+            <input type="number" min="0" step="${step}" value="${s.sold||''}" placeholder="0"
+              oninput="updateStock('${item.id}','sold',this.value)" onblur="updateStock('${item.id}','sold',this.value)">
+          </div>
+          <div class="ig"><label class="il">Closing</label>
+            <div class="ro-static">${fmtQty(s.closing)}</div>
+          </div>
+        </div>`;
+    } else {
+      const sizeInputs=(item.draughtSizes||[]).map((sz,idx)=>`
+        <div class="ig" style="margin-bottom:0">
+          <label class="il">Ksh ${sz.price} mug</label>
+          <input type="number" min="0" step="1" value="${s.draughtSold?.[idx]||''}" placeholder="0"
+            oninput="updateDraught('${item.id}',${idx},this.value)">
+        </div>`).join('');
+      inputsHtml=`
+        <div class="irow-flex" style="margin-bottom:8px">
+          <div class="ig"><label class="il">Added (kegs)</label>
+            <input type="number" min="0" step="1" value="${s.added||''}" placeholder="0"
+              oninput="updateStock('${item.id}','added',this.value)">
+          </div>
+          <div class="ig"><label class="il">Closing</label>
+            <div class="ro-static">${fmtQty(s.closing)}</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Mugs sold per size:</div>
+        <div class="dgrid">${sizeInputs}</div>
+        ${s.draughtRevenue>0?`<div style="margin-top:8px;font-size:13px;color:var(--green)">Revenue: ${fmtMoney(s.draughtRevenue)}</div>`:''}`;
+    }
+
+    return `<div class="irow">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
+        <div>
+          <span class="iname">${item.name}</span><span class="tag ${tagClass}">${tagLabel}</span>
+          <div class="imeta" style="margin-top:3px">Opening stock: <b style="color:var(--text)">${fmtQty(s.opening)}</b></div>
+        </div>
+      </div>
+      ${inputsHtml}
+    </div>`;
+  }).join('');
+
+  let expRows=FIXED_EXP.map(cat=>`
+    <div class="exrow">
+      <span class="exname">${cat}</span>
+      <span class="examt" id="examt-${cat.replace(/ /g,'_')}">${STATE.expenses[cat]?fmtMoney(STATE.expenses[cat]):''}</span>
+      <input type="number" class="exinput" min="0" step="0.01" value="${STATE.expenses[cat]||''}" placeholder="0.00"
+        oninput="updateExp('${cat}',this.value)" onblur="updateExp('${cat}',this.value)">
+    </div>`).join('');
+
+  return `
+    <div class="drow">
+      <span class="dlabel">Date:</span>
+      <input type="date" value="${dateStr}" max="${todayStr()}" onchange="changeDate(this.value)">
+      ${!isToday?'<span style="font-size:12px;color:var(--gold)">Editing past</span>':''}
+    </div>
+    <div class="stitle">Stock & Sales</div>
+    <div class="ssub">Record added stock and units sold today</div>
+    ${rows||'<div class="nodata">No active items. Add items in the Items tab.</div>'}
+    <div class="div"></div>
+    <div class="stitle">Daily Expenses</div>
+    <div class="ssub">Enter today's operating costs</div>
+    <div class="card">${expRows}</div>
+    <button class="btn btn-s btn-w" onclick="confirmDay()" style="margin-top:4px">✓ Save Day Entry</button>
+    <div style="height:20px"></div>
+  `;
+}
+
+function changeDate(val){
+  STATE.date=val;
+  loadDayData(val);
+  render();
+}
+
+function updateStock(id,field,val){
+  if(!STATE.dayData.stocks[id]) STATE.dayData.stocks[id]=emptyStock();
+  const s=STATE.dayData.stocks[id];
+  s[field]=parseFloat(val)||0;
+  s.closing=(s.opening||0)+(s.added||0)-(s.sold||0);
+  saveDayData();
+  // Update closing display without full re-render
+  refreshClosing(id,s.closing);
+}
+
+function refreshClosing(id,val){
+  // find ro-static in the item row — use a targeted update
+  const rows=document.querySelectorAll('.irow');
+  rows.forEach(row=>{
+    if(row.innerHTML.includes(`'${id}'`)){
+      const ro=row.querySelector('.ro-static');
+      if(ro) ro.textContent=fmtQty(val);
+    }
+  });
+}
+
+function updateDraught(id,sizeIdx,val){
+  if(!STATE.dayData.stocks[id]) STATE.dayData.stocks[id]=emptyStock();
+  const s=STATE.dayData.stocks[id];
+  if(!s.draughtSold) s.draughtSold={};
+  s.draughtSold[sizeIdx]=parseFloat(val)||0;
+  const item=STATE.items.find(i=>i.id===id);
+  if(item?.draughtSizes){
+    s.draughtRevenue=item.draughtSizes.reduce((a,sz,idx)=>a+(s.draughtSold[idx]||0)*sz.price,0);
+  }
+  saveDayData();
+}
+
+function updateExp(cat,val){
+  STATE.expenses[cat]=parseFloat(val)||0;
+  saveExpenses();
+}
+
+function confirmDay(){saveDayData();saveExpenses();showToast('✓ Entry saved successfully!')}
+
+// ─── SUMMARY ───────────────────────────────────────
+function renderSummary(){
+  const items=STATE.items.filter(i=>i.active!==false);
+  let totalRev=0;
+  const salesLines=[];
+  items.forEach(item=>{
+    const s=STATE.dayData?.stocks?.[item.id];
+    if(!s)return;
+    let rev=0;
+    if(item.type==='draught') rev=s.draughtRevenue||0;
+    else rev=(s.sold||0)*item.price;
+    if(rev>0){salesLines.push({name:item.name,qty:item.type==='draught'?null:s.sold,rev});totalRev+=rev;}
+  });
+  let totalDailyExp=0;
+  const expLines=FIXED_EXP.map(cat=>({name:cat,amt:STATE.expenses[cat]||0})).filter(e=>e.amt>0);
+  expLines.forEach(e=>totalDailyExp+=e.amt);
+
+  const meToday=STATE.monthlyExp.filter(me=>me.date===STATE.date);
+  let totalMonthly=0;
+  meToday.forEach(me=>totalMonthly+=me.amount);
+
+  const totalExp=totalDailyExp+totalMonthly;
+  const profit=totalRev-totalExp;
+
+  const salesHtml=salesLines.length?salesLines.map(l=>`
+    <div class="sumrow">
+      <span>${l.name}${l.qty!=null?' × '+fmtQty(l.qty):''}</span>
+      <span style="color:var(--gold2)">${fmtMoney(l.rev)}</span>
+    </div>`).join('')+'<div class="sumrow bold"><span>Total Revenue</span><span>'+fmtMoney(totalRev)+'</span></div>'
+    :'<div class="nodata">No sales recorded</div>';
+
+  const expHtml=(expLines.length+meToday.length)?
+    expLines.map(e=>`<div class="sumrow exp"><span>${e.name}</span><span>– ${fmtMoney(e.amt)}</span></div>`).join('')+
+    meToday.map(me=>`<div class="sumrow exp"><span>${me.name} <span class="tag" style="color:var(--gold);border-color:var(--gold)">Monthly</span></span><span>– ${fmtMoney(me.amount)}</span></div>`).join('')+
+    `<div class="sumrow bold"><span>Total Expenses</span><span>– ${fmtMoney(totalExp)}</span></div>`
+    :'<div class="nodata">No expenses recorded</div>';
+
+  const profitClass=profit>=0?'profit':'loss';
+  const profitLabel=profit>=0?'Net Profit':'Net Loss';
+
+  const stockRows=items.map(item=>{
+    const s=STATE.dayData?.stocks?.[item.id]||emptyStock();
+    return `<div class="sumrow"><span>${item.name}</span><span style="font-size:12px;color:var(--muted)">Open ${fmtQty(s.opening)} → Close <b style="color:var(--text)">${fmtQty(s.closing)}</b></span></div>`;
+  }).join('');
+
+  return `
+    <div class="drow">
+      <span class="dlabel">Date:</span>
+      <input type="date" value="${STATE.date}" max="${todayStr()}" onchange="changeDate(this.value)">
+    </div>
+    <div class="stats2">
+      <div class="scard"><div class="slabel">Total Revenue</div><div class="sval gold">${fmtMoney(totalRev)}</div></div>
+      <div class="scard"><div class="slabel">Net Profit/Loss</div><div class="sval ${profit>=0?'green':'red'}">${fmtMoney(profit)}</div></div>
+    </div>
+    <div class="card"><div class="ctitle">Sales Breakdown</div>${salesHtml}</div>
+    <div class="card"><div class="ctitle">Expenses</div>${expHtml}</div>
+    <div class="card"><div class="sumrow ${profitClass}"><span>${profitLabel}</span><span>${fmtMoney(profit)}</span></div></div>
+    <div class="card"><div class="ctitle">Stock Status</div>${stockRows}</div>
+  `;
+}
+
+// ─── HISTORY ───────────────────────────────────────
+function renderHistory(){
+  const months=[];
+  const now=new Date();
+  for(let i=0;i<12;i++){
+    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    months.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'));
+  }
+  const pills=months.map(m=>`<span class="mpill ${m===STATE.histMonth?'on':''}" onclick="setHistMonth('${m}')">${new Date(m+'-15').toLocaleDateString('en-KE',{month:'short',year:'2-digit'})}</span>`).join('');
+
+  // Load days for selected month
+  const [yr,mo]=STATE.histMonth.split('-').map(Number);
+  const daysInMonth=new Date(yr,mo,0).getDate();
+  const records=[];
+  for(let d=1;d<=daysInMonth;d++){
+    const ds=STATE.histMonth+'-'+String(d).padStart(2,'0');
+    const dd=DB.get('day:'+ds);
+    if(dd){
+      const ex=DB.get('expenses:'+ds)||{};
+      records.push({date:ds,dayData:dd,expenses:ex});
+    }
+  }
+
+  let monthTotals={rev:0,exp:0,profit:0};
+  const recHtml=records.length?records.map(r=>{
+    const {rev,exp,profit}=calcDaySummary(r.dayData,r.expenses,r.date);
+    monthTotals.rev+=rev;monthTotals.exp+=exp;monthTotals.profit+=profit;
+    const dl=new Date(r.date+'T12:00:00').toLocaleDateString('en-KE',{weekday:'short',day:'numeric',month:'short'});
+    return `<div class="hcard">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-weight:600">${dl}</span>
+        <span style="${profit>=0?'color:var(--green)':'color:var(--red)'};font-weight:700">${fmtMoney(profit)}</span>
+      </div>
+      <div style="display:flex;gap:16px;font-size:13px">
+        <span style="color:var(--gold2)">Rev: ${fmtMoney(rev)}</span>
+        <span style="color:var(--red)">Exp: ${fmtMoney(exp)}</span>
+      </div>
+    </div>`;
+  }).join(''):'<div class="nodata">No records for this month</div>';
+
+  const summaryHtml=records.length?`
+    <div class="card" style="margin-bottom:14px">
+      <div class="ctitle">Monthly Summary — ${STATE.histMonth}</div>
+      <div class="stats2">
+        <div class="scard"><div class="slabel">Total Revenue</div><div class="sval gold">${fmtMoney(monthTotals.rev)}</div></div>
+        <div class="scard"><div class="slabel">Net Profit</div><div class="sval ${monthTotals.profit>=0?'green':'red'}">${fmtMoney(monthTotals.profit)}</div></div>
+      </div>
+    </div>`:'';
+
+  return `
+    <div class="stitle">History</div>
+    <div class="ssub">View records by month</div>
+    <div style="margin-bottom:14px;display:flex;flex-wrap:wrap">${pills}</div>
+    ${summaryHtml}
+    ${recHtml}
+  `;
+}
+
+function setHistMonth(m){STATE.histMonth=m;render()}
+
+function calcDaySummary(dayData,expenses,date){
+  let rev=0;
+  STATE.items.forEach(item=>{
+    const s=dayData.stocks?.[item.id];
+    if(!s)return;
+    if(item.type==='draught') rev+=s.draughtRevenue||0;
+    else rev+=(s.sold||0)*item.price;
+  });
+  let exp=Object.values(expenses).reduce((a,b)=>a+(+b||0),0);
+  const meToday=STATE.monthlyExp.filter(me=>me.date===date);
+  meToday.forEach(me=>exp+=me.amount);
+  return{rev,exp,profit:rev-exp};
+}
+
+// ─── ITEMS MANAGER ───────────────────────────────────
+let newItemForm={name:'',type:'decimal',price:'',draughtSizes:[{price:50},{price:70}]};
+
+function renderItems(){
+  const rows=STATE.items.map(item=>{
+    const tagClass=item.type==='whole'?'tag-w':item.type==='decimal'?'tag-d':'tag-dr';
+    const tagLabel=item.type==='whole'?'Whole':item.type==='decimal'?'Decimal':'Draught';
+    const meta=item.type==='draught'?`Mugs: ${item.draughtSizes?.map(s=>'Ksh '+s.price).join(', ')}`:`Ksh ${item.price} / unit`;
+    const inactiveTag=item.active===false?'<span class="tag tag-off">Inactive</span>':'';
+    return `<div class="irow" style="${item.active===false?'opacity:0.5':''}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div style="flex:1">
+          <span class="iname">${item.name}</span><span class="tag ${tagClass}">${tagLabel}</span>${inactiveTag}
+          <div class="imeta" style="margin-top:4px">${meta}</div>
+        </div>
+        <div style="display:flex;gap:6px;margin-left:8px">
+          <button class="btn btn-g btn-sm" onclick="toggleItem('${item.id}')">${item.active===false?'Enable':'Disable'}</button>
+          <button class="btn btn-d btn-sm" onclick="removeItem('${item.id}')">✕</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div><div class="stitle">Items</div><div class="ssub">${STATE.items.length} items total</div></div>
+      <button class="btn btn-p btn-sm" onclick="openAddItem()">+ Add Item</button>
+    </div>
+    ${rows}
+  `;
+}
+
+function renderAddItemModal(){
+  const f=newItemForm;
+  const draughtSizes=f.type==='draught'?`
+    <div class="ig">
+      <label class="il">Mug Sizes & Prices</label>
+      ${f.draughtSizes.map((sz,idx)=>`
+        <div class="irow-flex" style="margin-bottom:8px">
+          <div class="ig"><label class="il">Mug ${idx+1} price (Ksh)</label>
+            <input type="number" min="0" value="${sz.price}" oninput="updateNewDraughtSize(${idx},this.value)">
+          </div>
+          ${f.draughtSizes.length>1?`<button class="btn btn-d btn-sm" style="align-self:flex-end" onclick="removeNewDraughtSize(${idx})">✕</button>`:''}
+        </div>`).join('')}
+      ${f.draughtSizes.length<5?`<button class="btn btn-g btn-sm" onclick="addNewDraughtSize()">+ Add Size</button>`:''}
+    </div>`:'';
+
+  const priceField=f.type!=='draught'?`
+    <div class="ig"><label class="il">Unit Price (Ksh)</label>
+      <input type="number" min="0" value="${f.price}" placeholder="0.00" oninput="updateNewItem('price',this.value)">
+    </div>`:'';
+
+  return `<div class="overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-title">Add New Item</div>
+      <div class="ig"><label class="il">Item Name</label>
+        <input type="text" value="${f.name}" placeholder="e.g. Tusker Lager" oninput="updateNewItem('name',this.value)">
+      </div>
+      <div class="ig"><label class="il">Sell Type</label>
+        <select onchange="updateNewItem('type',this.value)">
+          <option value="whole" ${f.type==='whole'?'selected':''}>Whole bottles only (e.g. Guinness)</option>
+          <option value="decimal" ${f.type==='decimal'?'selected':''}>Decimal / quarters (e.g. spirits)</option>
+          <option value="draught" ${f.type==='draught'?'selected':''}>Draught beer (sold by mug size)</option>
+        </select>
+      </div>
+      ${priceField}
+      ${draughtSizes}
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="btn btn-p btn-w" onclick="saveNewItem()">Add Item</button>
+        <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openAddItem(){newItemForm={name:'',type:'decimal',price:'',draughtSizes:[{price:50},{price:70}]};STATE.modal='addItem';render()}
+function closeModal(){STATE.modal=null;render()}
+function updateNewItem(field,val){
+  newItemForm[field]=val;
+  if(field==='type'&&val==='draught'&&!newItemForm.draughtSizes.length)newItemForm.draughtSizes=[{price:50},{price:70}];
+  STATE.modal='addItem';render();
+}
+function updateNewDraughtSize(idx,val){newItemForm.draughtSizes[idx]={price:parseFloat(val)||0};STATE.modal='addItem';render()}
+function addNewDraughtSize(){newItemForm.draughtSizes.push({price:0});STATE.modal='addItem';render()}
+function removeNewDraughtSize(idx){newItemForm.draughtSizes.splice(idx,1);STATE.modal='addItem';render()}
+function saveNewItem(){
+  const f=newItemForm;
+  if(!f.name.trim()){showToast('Enter item name');return}
+  if(f.type!=='draught'&&!f.price){showToast('Enter unit price');return}
+  const item={
+    id:'item_'+Date.now(),name:f.name.trim(),type:f.type,active:true,
+    price:parseFloat(f.price)||0,
+    draughtSizes:f.type==='draught'?f.draughtSizes.map(s=>({price:parseFloat(s.price)||0})):[]
+  };
+  STATE.items.push(item);
+  DB.set('items',STATE.items);
+  STATE.modal=null;render();showToast('✓ '+item.name+' added');
+}
+function toggleItem(id){
+  const it=STATE.items.find(i=>i.id===id);
+  if(it)it.active=it.active===false?true:false;
+  DB.set('items',STATE.items);render();
+}
+function removeItem(id){
+  STATE.items=STATE.items.filter(i=>i.id!==id);
+  DB.set('items',STATE.items);render();showToast('Item removed');
+}
+
+// ─── MONTHLY EXPENSES ───────────────────────────────
+let newMonthlyForm={name:'',amount:'',date:todayStr()};
+
+function renderMonthly(){
+  const grouped={};
+  STATE.monthlyExp.forEach(e=>{
+    const m=monthOf(e.date);
+    if(!grouped[m])grouped[m]=[];
+    grouped[m].push(e);
+  });
+  const months=Object.keys(grouped).sort().reverse();
+  const html=months.length?months.map(m=>{
+    const label=new Date(m+'-15').toLocaleDateString('en-KE',{month:'long',year:'numeric'});
+    const rows=grouped[m].map(e=>`
+      <div class="irow" style="display:flex;align-items:center">
+        <div style="flex:1"><div class="iname">${e.name}</div><div class="imeta">Due: ${e.date}</div></div>
+        <span style="font-weight:700;color:var(--gold2);margin-right:12px">${fmtMoney(e.amount)}</span>
+        <button class="btn btn-d btn-sm" onclick="removeMonthlyExp('${e.id}')">✕</button>
+      </div>`).join('');
+    return `<div style="font-size:12px;color:var(--muted);font-weight:700;margin:12px 0 6px">${label}</div>${rows}`;
+  }).join(''):'<div class="nodata">No monthly expenses added</div>';
+
+  return `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div><div class="stitle">Monthly Expenses</div><div class="ssub">DSTV, Wi-Fi, rent, etc.</div></div>
+      <button class="btn btn-p btn-sm" onclick="openAddMonthly()">+ Add</button>
+    </div>
+    ${html}
+  `;
+}
+
+function renderAddMonthlyModal(){
+  const f=newMonthlyForm;
+  return `<div class="overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-title">Add Monthly Expense</div>
+      <div class="ig"><label class="il">Name (e.g. DSTV, Wi-Fi, Rent)</label>
+        <input type="text" value="${f.name}" placeholder="Expense name" oninput="updateNewMonthly('name',this.value)">
+      </div>
+      <div class="ig"><label class="il">Amount (Ksh)</label>
+        <input type="number" min="0" value="${f.amount}" placeholder="0.00" oninput="updateNewMonthly('amount',this.value)">
+      </div>
+      <div class="ig"><label class="il">Due Date</label>
+        <input type="date" value="${f.date}" onchange="updateNewMonthly('date',this.value)">
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button class="btn btn-p btn-w" onclick="saveNewMonthly()">Add Expense</button>
+        <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openAddMonthly(){newMonthlyForm={name:'',amount:'',date:todayStr()};STATE.modal='addMonthly';render()}
+function updateNewMonthly(field,val){newMonthlyForm[field]=val;STATE.modal='addMonthly';render()}
+function saveNewMonthly(){
+  const f=newMonthlyForm;
+  if(!f.name.trim()||!f.amount){showToast('Fill in all fields');return}
+  const exp={id:'me_'+Date.now(),name:f.name.trim(),amount:parseFloat(f.amount),date:f.date};
+  STATE.monthlyExp.push(exp);
+  DB.set('monthly_expenses',STATE.monthlyExp);
+  STATE.modal=null;render();showToast('✓ '+exp.name+' added');
+}
+function removeMonthlyExp(id){
+  STATE.monthlyExp=STATE.monthlyExp.filter(e=>e.id!==id);
+  DB.set('monthly_expenses',STATE.monthlyExp);render();showToast('Removed');
+}
+
+// ═══════════════════════════════════════════════════════
+// START
+// ═══════════════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
