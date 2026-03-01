@@ -8,8 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0d0f14">
 <title>Airport Bar</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
@@ -18,142 +17,129 @@
   --text:#e8eaf0;--muted:#7a8299;--r:14px;
   --head:'Playfair Display',serif;--body:'Nunito',sans-serif;
 }
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--body)}
-#app{max-width:430px;height:100vh;margin:0 auto;display:flex;flex-direction:column;background:var(--bg);position:relative;overflow:hidden}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--body);font-size:15px}
+#app{max-width:430px;height:100vh;margin:0 auto;display:flex;flex-direction:column;background:var(--bg);overflow:hidden}
 
 /* HEADER */
-.hdr{background:var(--s1);border-bottom:1px solid var(--border);padding:14px 18px 10px;flex-shrink:0}
+.hdr{background:var(--s1);border-bottom:1px solid var(--border);padding:13px 18px 9px;flex-shrink:0}
 .hdr-top{display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:var(--head);font-size:22px;color:var(--gold);letter-spacing:.02em}
-.logo em{color:var(--muted);font-style:italic;font-size:18px}
-.ubadge{background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--muted);cursor:pointer;font-family:var(--body)}
+.logo{font-family:var(--head);font-size:22px;color:var(--gold)}
+.logo em{color:var(--muted);font-style:italic;font-size:17px}
+.ubadge{background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:5px 13px;font-size:12px;color:var(--muted);cursor:pointer}
 .ubadge.owner{color:var(--gold);border-color:var(--gold)}
 
 /* NAV */
 .nav{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .nav::-webkit-scrollbar{display:none}
-.nav-btn{flex:none;padding:10px 15px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--body);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+.nav-btn{flex:none;padding:10px 14px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--body);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
 .nav-btn.on{color:var(--gold);border-bottom-color:var(--gold)}
 
 /* PAGE */
-.page{flex:1;overflow-y:auto;padding:16px;padding-bottom:24px;-webkit-overflow-scrolling:touch}
+.page{flex:1;overflow-y:auto;padding:15px;padding-bottom:40px;-webkit-overflow-scrolling:touch}
 
 /* CARDS */
-.card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:15px;margin-bottom:12px}
-.ctitle{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
-
-/* SECTION */
-.stitle{font-family:var(--head);font-size:20px;margin-bottom:3px}
-.ssub{font-size:12px;color:var(--muted);margin-bottom:14px}
+.card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:11px}
+.ctitle{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:11px}
+.stitle{font-family:var(--head);font-size:19px;margin-bottom:3px}
+.ssub{font-size:12px;color:var(--muted);margin-bottom:13px}
 
 /* STATS */
-.stats2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.scard{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px}
-.slabel{font-size:11px;color:var(--muted);margin-bottom:4px}
-.sval{font-size:17px;font-weight:700}
+.stats2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:11px}
+.scard{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:11px}
+.slabel{font-size:11px;color:var(--muted);margin-bottom:3px}
+.sval{font-size:16px;font-weight:700}
 .sval.gold{color:var(--gold2)}.sval.green{color:var(--green)}.sval.red{color:var(--red)}
 
 /* INPUTS */
-.ig{margin-bottom:11px}
-.il{font-size:12px;color:var(--muted);margin-bottom:5px;display:block}
-input[type=text],input[type=number],input[type=date],select{
-  width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;
-  padding:10px 12px;color:var(--text);font-family:var(--body);font-size:14px;
-  outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none
-}
-input:focus,select:focus{border-color:var(--gold)}
-input::placeholder{color:var(--muted)}
-select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%237a8299' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.ig{margin-bottom:10px}
+.il{font-size:12px;color:var(--muted);margin-bottom:5px;display:block;pointer-events:none}
+.ifield{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:var(--body);font-size:15px;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;display:block}
+.ifield:focus{border-color:var(--gold)}
+.ifield::placeholder{color:var(--muted)}
+select.ifield{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%237a8299' d='M5 6L0 0h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
+.ro{background:var(--bg);color:var(--gold2);font-weight:700;border-radius:8px;padding:10px 12px;font-size:14px;border:1px solid var(--border);text-align:center}
 
 /* BUTTONS */
-.btn{border:none;border-radius:8px;padding:11px 18px;font-family:var(--body);font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.btn{border:none;border-radius:8px;padding:10px 16px;font-family:var(--body);font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:5px;transition:all .15s;-webkit-appearance:none}
 .btn:active{transform:scale(.97)}
 .btn-p{background:var(--gold);color:#0d0f14}
 .btn-g{background:var(--s2);color:var(--text);border:1px solid var(--border)}
 .btn-d{background:var(--red);color:#fff}
 .btn-s{background:var(--green);color:#0d0f14}
 .btn-w{width:100%}
-.btn-sm{padding:7px 12px;font-size:12px}
+.btn-sm{padding:7px 11px;font-size:12px}
 
-/* ITEM ROW */
+/* ITEM ROWS */
 .irow{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px}
-.iname{font-size:15px;font-weight:600;margin-bottom:3px}
+.iname{font-size:14px;font-weight:700;margin-bottom:3px}
 .imeta{font-size:12px;color:var(--muted)}
-.tag{display:inline-block;border-radius:4px;padding:2px 7px;font-size:10px;margin-left:5px;border:1px solid}
-.tag-w{color:#7eb3f5;border-color:#7eb3f5}.tag-d{color:#5cb88a;border-color:#5cb88a}.tag-dr{color:#a78bfa;border-color:#a78bfa}.tag-off{color:var(--red);border-color:var(--red)}
+.tag{display:inline-block;border-radius:4px;padding:2px 6px;font-size:10px;margin-left:5px;border:1px solid;vertical-align:middle}
+.tag-d{color:#5cb88a;border-color:#5cb88a}
+.tag-w{color:#7eb3f5;border-color:#7eb3f5}
+.tag-dr{color:#a78bfa;border-color:#a78bfa}
+.tag-off{color:var(--red);border-color:var(--red)}
 
-/* ROW LAYOUT */
-.irow-flex{display:flex;gap:8px;align-items:flex-end}
-.irow-flex .ig{flex:1;margin-bottom:0}
-.ro-static{background:var(--bg);color:var(--gold2);font-weight:700;border-radius:8px;padding:10px 12px;font-size:14px;border:1px solid var(--border);min-width:0}
+/* FLEX ROW */
+.frow{display:flex;gap:7px;align-items:flex-end}
+.frow .ig{flex:1;margin-bottom:0}
 
-/* EXPENSE */
-.exrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+/* EXPENSES */
+.exrow{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)}
 .exrow:last-child{border-bottom:none}
 .exname{flex:1;font-size:14px}
-.examt{font-size:13px;font-weight:600;color:var(--gold2)}
-.exinput{width:110px;text-align:right}
+.exinput{width:100px;text-align:right}
 
-/* SUMMARY ROWS */
-.sumrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+/* SUMMARY */
+.sumrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
 .sumrow:last-child{border-bottom:none}
-.sumrow.bold{font-weight:700;font-size:15px;color:var(--gold2)}
+.sumrow.bold{font-weight:700;font-size:14px;color:var(--gold2)}
 .sumrow.exp{color:var(--red)}
-.sumrow.profit{font-weight:800;font-size:17px;color:var(--green)}
-.sumrow.loss{font-weight:800;font-size:17px;color:var(--red)}
+.sumrow.profit{font-weight:800;font-size:16px;color:var(--green)}
+.sumrow.loss{font-weight:800;font-size:16px;color:var(--red)}
 
-/* DATE ROW */
-.drow{display:flex;align-items:center;gap:10px;margin-bottom:15px}
-.drow input{flex:1;max-width:180px}
+/* DATE */
+.drow{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.drow .ifield{flex:1;max-width:175px}
 .dlabel{font-size:13px;color:var(--muted)}
 
 /* DIVIDER */
-.div{height:1px;background:var(--border);margin:14px 0}
+.div{height:1px;background:var(--border);margin:13px 0}
 
-/* MODAL */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;justify-content:center}
-.modal{background:var(--s1);border-radius:20px 20px 0 0;padding:24px;width:100%;max-width:430px;max-height:88vh;overflow-y:auto}
-.modal-title{font-family:var(--head);font-size:20px;margin-bottom:16px}
+/* MODAL - key fix: position fixed so it doesn't scroll away when keyboard opens */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--s1);border-radius:20px 20px 0 0;padding:22px;width:100%;max-width:430px;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.modal-title{font-family:var(--head);font-size:20px;margin-bottom:15px}
 
 /* LOGIN */
-.login{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:var(--bg)}
-.login-logo{font-family:var(--head);font-size:40px;color:var(--gold);margin-bottom:4px}
-.login-sub{font-size:13px;color:var(--muted);margin-bottom:40px;letter-spacing:.05em}
-.login-card{width:100%;max-width:340px}
-.role-btn{width:100%;padding:18px;font-size:16px;margin-bottom:12px;border-radius:12px}
+.login-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:var(--bg)}
+.login-logo{font-family:var(--head);font-size:42px;color:var(--gold);margin-bottom:4px}
+.login-sub{font-size:12px;color:var(--muted);margin-bottom:36px;letter-spacing:.1em;text-transform:uppercase}
+.login-card{width:100%;max-width:320px}
+.role-btn{width:100%;padding:17px;font-size:15px;margin-bottom:11px;border-radius:12px}
 
-/* PIN */
-.pin-dots{display:flex;gap:12px;justify-content:center;margin:20px 0}
-.pdot{width:14px;height:14px;border-radius:50%;background:var(--border);transition:background .2s}
-.pdot.on{background:var(--gold)}
-.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
-.kbtn{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:18px;font-size:22px;color:var(--text);cursor:pointer;text-align:center;font-family:var(--body);font-weight:500;transition:background .15s}
+/* PIN - hidden dots */
+.pin-display{display:flex;gap:14px;justify-content:center;margin:18px 0 8px}
+.pdot{width:14px;height:14px;border-radius:50%;background:var(--border);transition:all .15s}
+.pdot.on{background:var(--gold);transform:scale(1.1)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px}
+.kbtn{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:17px;font-size:22px;color:var(--text);cursor:pointer;text-align:center;font-family:var(--body);font-weight:500;transition:background .15s;-webkit-appearance:none;border:1px solid var(--border)}
 .kbtn:active{background:var(--border)}
-.kbtn.gold{background:var(--gold);color:#0d0f14;border-color:var(--gold)}
-.kbtn.invis{visibility:hidden}
+.kbtn.invis{visibility:hidden;pointer-events:none}
+.pin-err{text-align:center;color:var(--red);font-size:13px;margin-top:6px;min-height:18px}
 
 /* TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--s1);border:1px solid var(--gold);border-radius:20px;padding:10px 22px;font-size:13px;color:var(--gold2);z-index:500;pointer-events:none;opacity:0;transition:opacity .3s}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--s1);border:1px solid var(--gold);border-radius:20px;padding:9px 20px;font-size:13px;color:var(--gold2);z-index:500;pointer-events:none;opacity:0;transition:opacity .3s;white-space:nowrap}
 .toast.show{opacity:1}
 
-/* NO DATA */
-.nodata{text-align:center;color:var(--muted);padding:28px 0;font-size:14px}
-
-/* DRAUGHT */
-.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-
-/* MONTH PILLS */
-.mpill{display:inline-block;background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;margin:3px;color:var(--muted);transition:all .2s}
+/* MISC */
+.nodata{text-align:center;color:var(--muted);padding:26px 0;font-size:13px}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.mpill{display:inline-block;background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:5px 13px;font-size:12px;cursor:pointer;margin:3px;color:var(--muted);transition:all .2s}
 .mpill.on{background:var(--gold);color:#0d0f14;border-color:var(--gold);font-weight:700}
-
-/* HISTORY CARD */
-.hcard{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:13px;margin-bottom:8px}
-
-/* CONFIRM BTN */
-.confirm-strip{background:var(--s1);border-top:1px solid var(--border);padding:12px 16px;flex-shrink:0}
-
-/* ERROR */
-.pin-error{text-align:center;color:var(--red);font-size:13px;margin-top:8px;min-height:20px}
+.hcard{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:7px;cursor:pointer}
+.hcard.expanded{border-color:var(--gold)}
+.hcard-detail{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.section-btn{background:none;border:none;color:var(--gold);font-family:var(--body);font-size:13px;font-weight:600;cursor:pointer;padding:0;text-decoration:underline}
 </style>
 </head>
 <body>
@@ -161,684 +147,838 @@ select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='htt
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-// STORAGE (localStorage — works 100% offline, no internet)
-// ═══════════════════════════════════════════════════════
-const DB = {
+// ══════════════════════════════════════════
+// STORAGE
+// ══════════════════════════════════════════
+const DB={
   get(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch{return null}},
   set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{showToast('Storage full!')}},
-  del(k){try{localStorage.removeItem(k)}catch{}},
-  keys(){return Object.keys(localStorage)}
+  del(k){try{localStorage.removeItem(k)}catch{}}
 };
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // STATE
-// ═══════════════════════════════════════════════════════
-let STATE = {
-  user: null,         // {role:'owner'|'staff'}
-  tab: 'daily',
-  items: [],
-  date: todayStr(),
-  dayData: null,
-  expenses: {},
-  monthlyExp: [],
-  histMonth: todayStr().slice(0,7),
-  modal: null,        // null | 'addItem' | 'addMonthly'
-  pinRole: null,
-  pinVal: '',
-  pinError: '',
-  loaded: false
+// ══════════════════════════════════════════
+let S={
+  user:null,
+  tab:'daily',
+  items:[],
+  date:todayStr(),
+  dayData:null,
+  expenses:{},
+  dailyExpCats:[],   // owner-configurable daily expense categories
+  monthlyExp:[],
+  histMonth:todayStr().slice(0,7),
+  expandedHistDay:null,
+  modal:null,
+  pinRole:null,
+  pinVal:'',
+  pinErr:'',
+  loaded:false,
+  // temp form data
+  newItem:{name:'',type:'decimal',price:'',openingStock:'',draughtSizes:[{price:60},{price:70}]},
+  newMonthly:{name:'',amount:'',date:todayStr()},
+  newExpCat:''
 };
 
-const PINS = {owner:'1234', staff:'0000'};
-const FIXED_EXP = ['Lunch','Police Bribe','Cleaning','Transport','Other'];
+const PINS={owner:'2580',staff:'1234'};
+const DEFAULT_STAFF_EXP=['Lunch','Askari','Other'];
 
+// ══════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════
 function todayStr(){
   const d=new Date();
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 }
+function pad(n){return String(n).padStart(2,'0')}
 function monthOf(d){return d.slice(0,7)}
-function fmtMoney(n){return 'Ksh '+(+n||0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2})}
-function fmtQty(n){const x=+n||0;return Number.isInteger(x)?String(x):x.toFixed(2)}
+function fmtKsh(n){return 'Ksh '+(+n||0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function fmtQ(n){const x=+n||0;return Number.isInteger(x)?String(x):x.toFixed(2)}
 function emptyStock(){return{opening:0,added:0,sold:0,closing:0,draughtSold:{},draughtRevenue:0}}
-function buildEmptyDay(items,date){
-  const stocks={};
-  items.forEach(it=>{stocks[it.id]=emptyStock()});
-  return{date,stocks};
+function getPrevDay(ds){const d=new Date(ds+'T12:00:00');d.setDate(d.getDate()-1);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+
+let toastTimer=null;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  if(!t)return;
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2400);
 }
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // INIT
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 function init(){
   let items=DB.get('items');
   if(!items){items=defaultItems();DB.set('items',items)}
-  STATE.items=items;
-  STATE.monthlyExp=DB.get('monthly_expenses')||[];
-  loadDayData(STATE.date);
-  STATE.loaded=true;
+  S.items=items;
+  S.monthlyExp=DB.get('monthly_expenses')||[];
+  S.dailyExpCats=DB.get('daily_exp_cats')||[...DEFAULT_STAFF_EXP];
+  loadDayData(S.date);
+  S.loaded=true;
   render();
 }
 
 function defaultItems(){
+  // ALL items from the physical sheet
+  // Whole bottles (whole number tracking)
+  const whole=(id,name,price)=>({id,name,type:'whole',price,active:true,draughtSizes:[],openingStock:0});
+  // Decimal items (halves, quarters - spirits & similar)
+  const dec=(id,name,price)=>({id,name,type:'decimal',price,active:true,draughtSizes:[],openingStock:0});
+
   return[
-    {id:'tusker',name:'Tusker Lager',type:'whole',price:300,active:true,draughtSizes:[]},
-    {id:'guinness',name:'Guinness',type:'whole',price:350,active:true,draughtSizes:[]},
-    {id:'whitecap',name:'White Cap',type:'whole',price:300,active:true,draughtSizes:[]},
-    {id:'hansa',name:'Hansa',type:'whole',price:300,active:true,draughtSizes:[]},
-    {id:'heineken',name:'Heineken',type:'whole',price:400,active:true,draughtSizes:[]},
-    {id:'vodka',name:'Vodka (KK)',type:'decimal',price:1200,active:true,draughtSizes:[]},
-    {id:'whisky',name:'Whisky (B&W)',type:'decimal',price:1600,active:true,draughtSizes:[]},
-    {id:'brandy',name:'Brandy (Konyagi)',type:'decimal',price:900,active:true,draughtSizes:[]},
-    {id:'draught',name:'Tusker Draught',type:'draught',price:0,active:true,draughtSizes:[{price:50},{price:70},{price:120}]},
-    {id:'softs',name:'Soft Drinks',type:'whole',price:100,active:true,draughtSizes:[]},
-    {id:'water',name:'Water (500ml)',type:'whole',price:50,active:true,draughtSizes:[]},
+    // SPIRITS / DECIMAL
+    dec('gin','Gin',0),
+    dec('kc','K.C',0),
+    dec('kk','K.K',0),
+    dec('hunters','Hunters',350),
+    dec('county','County',0),
+    dec('trace','Trace',400),
+    dec('aquila','Aquila',0),
+    dec('supa','Supa / Red Bull',0),
+    dec('best','Best',0),
+    dec('chrome','Chrome',0),
+    dec('mzinga_chrome','Mzinga Chrome',0),
+    dec('mzinga_captain','Mzinga Captain',0),
+    dec('mzinga_tripple','Mzinga Tripple',0),
+    dec('mzinga_gmeaking','Mzinga G.Meaking',0),
+    dec('predator','Predator',0),
+    dec('sminoff_ice','Sminoff Ice',0),
+    dec('viceroy','Viceroy',300),
+    dec('minista_mind','Minista Mind',0),
+    dec('tripple_ice','Tripple Ice',0),
+    dec('people','People',0),
+    dec('richot','Richot',0),
+    dec('kane','Kane',0),
+    dec('liberty','Liberty',0),
+    dec('kibao','Kibao',0),
+    dec('dem_mode','Dem Mode',300),
+    dec('dallas','Dallas',0),
+    dec('origin','Origin',0),
+    dec('mzinga_kc','Mzinga KC',0),
+    dec('mzinga_county','Mzinga County',0),
+    dec('mzinga_kane','Mzinga Kane',0),
+    dec('best_whiskey','Best Whiskey',0),
+    dec('ranger','Ranger',0),
+    dec('konyagi','Konyagi',0),
+    dec('vna','V&A',0),
+    dec('sinoff_ba','Sinoff Black & Ace',100),
+    dec('smart','Smart',0),
+    // WHOLE BOTTLES
+    whole('tusker','Tusker',250),
+    whole('wcup','W.Cup',230),
+    whole('balozi','Balozi',0),
+    whole('tusker_cidar','Tusker Cidar',0),
+    whole('b_ice','B.Ice',0),
+    whole('guaranna','Guaranna',200),
+    whole('g_le_can','G.Le Can',0),
+    whole('wcap_can','W.Cap Can',0),
+    whole('tusker_can','Tusker Can',0),
+    whole('g_meaking','G.Meaking',0),
+    whole('soda','Soda',0),
+    // DRAUGHT
+    {id:'keg',name:'Keg (Snapps)',type:'draught',price:0,active:true,openingStock:0,
+     draughtSizes:[{price:60},{price:70}]},
   ];
 }
 
 function loadDayData(date){
   let dd=DB.get('day:'+date);
   if(!dd){
-    // Try to carry over closing stock from previous day as opening
-    dd=buildEmptyDay(STATE.items,date);
-    // Find previous day
-    const prev=getPrevDay(date);
-    if(prev){
+    dd={date,stocks:{}};
+    S.items.forEach(it=>{
+      const s=emptyStock();
+      // carry over closing from previous day
+      const prev=getPrevDay(date);
       const prevDD=DB.get('day:'+prev);
-      if(prevDD){
-        STATE.items.forEach(it=>{
-          const ps=prevDD.stocks?.[it.id];
-          if(ps && dd.stocks[it.id]!==undefined){
-            dd.stocks[it.id].opening=ps.closing||0;
-            dd.stocks[it.id].closing=ps.closing||0;
-          }
-        });
+      if(prevDD?.stocks?.[it.id]){
+        s.opening=prevDD.stocks[it.id].closing||0;
+        s.closing=s.opening;
+      } else {
+        // use the item's defined opening stock as fallback
+        s.opening=it.openingStock||0;
+        s.closing=s.opening;
       }
-    }
+      dd.stocks[it.id]=s;
+    });
+  } else {
+    // Make sure any newly added items exist in dayData
+    S.items.forEach(it=>{
+      if(!dd.stocks[it.id]) dd.stocks[it.id]=emptyStock();
+    });
   }
-  STATE.dayData=dd;
-  STATE.expenses=DB.get('expenses:'+date)||{};
+  S.dayData=dd;
+  S.expenses=DB.get('expenses:'+date)||{};
 }
 
-function getPrevDay(dateStr){
-  const d=new Date(dateStr+'T12:00:00');
-  d.setDate(d.getDate()-1);
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-}
+function saveDay(){DB.set('day:'+S.date,S.dayData)}
+function saveExp(){DB.set('expenses:'+S.date,S.expenses)}
+function saveDailyExpCats(){DB.set('daily_exp_cats',S.dailyExpCats)}
 
-function saveDayData(){
-  DB.set('day:'+STATE.date,STATE.dayData);
-}
-function saveExpenses(){
-  DB.set('expenses:'+STATE.date,STATE.expenses);
-}
-
-// ═══════════════════════════════════════════════════════
-// TOAST
-// ═══════════════════════════════════════════════════════
-let toastTimer=null;
-function showToast(msg){
-  const t=document.getElementById('toast');
-  if(!t)return;
-  t.textContent=msg;t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
-}
-
-// ═══════════════════════════════════════════════════════
-// RENDER ENGINE
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════
+// MAIN RENDER
+// ══════════════════════════════════════════
 function render(){
   const app=document.getElementById('app');
   if(!app)return;
-  if(!STATE.loaded){app.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:var(--gold);font-family:var(--body)">Loading…</div>';return}
-  if(!STATE.user){app.innerHTML=renderLogin();attachLoginEvents();return}
-  app.innerHTML=renderApp();
-  attachAppEvents();
+  if(!S.loaded){app.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:var(--gold)">Loading…</div>';return}
+  if(!S.user){renderLogin(app);return}
+  renderApp(app);
 }
 
-// ─── LOGIN ───────────────────────────────────────────
-function renderLogin(){
-  if(!STATE.pinRole){
-    return `<div class="login">
+// ══════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════
+function renderLogin(app){
+  if(!S.pinRole){
+    app.innerHTML=`
+    <div class="login-wrap">
       <div class="login-logo">Airport Bar</div>
-      <div class="login-sub">BAR MANAGEMENT SYSTEM</div>
+      <div class="login-sub">Bar Management System</div>
       <div class="login-card">
-        <button class="btn btn-p role-btn" onclick="selectRole('owner')">👑 Sign in as Owner</button>
-        <button class="btn btn-g role-btn" onclick="selectRole('staff')">👤 Sign in as Staff</button>
-        <div style="margin-top:20px;text-align:center;font-size:11px;color:var(--muted)">Default PINs — Owner: 1234 &nbsp;·&nbsp; Staff: 0000</div>
+        <button class="btn btn-p role-btn" id="rb-owner">👑 Owner Login</button>
+        <button class="btn btn-g role-btn" id="rb-staff">👤 Staff Login</button>
       </div>
     </div>`;
+    document.getElementById('rb-owner').onclick=()=>pickRole('owner');
+    document.getElementById('rb-staff').onclick=()=>pickRole('staff');
+    return;
   }
-  const dots=[0,1,2,3].map(i=>`<div class="pdot ${i<STATE.pinVal.length?'on':''}"></div>`).join('');
-  const keys=['1','2','3','4','5','6','7','8','9','','0','del'];
-  const kpad=keys.map(k=>{
-    if(k==='')return '<div class="kbtn invis"></div>';
-    if(k==='del')return `<div class="kbtn" onclick="pinKey('del')">⌫</div>`;
-    return `<div class="kbtn" onclick="pinKey('${k}')">${k}</div>`;
-  }).join('');
-  return `<div class="login">
+  const dots=[0,1,2,3].map(i=>`<div class="pdot ${i<S.pinVal.length?'on':''}"></div>`).join('');
+  app.innerHTML=`
+  <div class="login-wrap">
     <div class="login-logo">Airport Bar</div>
-    <div class="login-sub">${STATE.pinRole==='owner'?'OWNER':'STAFF'} PIN</div>
+    <div class="login-sub">${S.pinRole==='owner'?'OWNER':'STAFF'} PIN</div>
     <div class="login-card">
-      <div class="pin-dots">${dots}</div>
-      <div class="pin-error">${STATE.pinError}</div>
-      <div class="keypad">${kpad}</div>
-      <button class="btn btn-g btn-w" style="margin-top:14px" onclick="backToRoles()">← Back</button>
+      <div class="pin-display">${dots}</div>
+      <div class="pin-err">${S.pinErr}</div>
+      <div class="keypad" id="kpad"></div>
+      <button class="btn btn-g btn-w" style="margin-top:13px" id="back-btn">← Back</button>
     </div>
   </div>`;
+  document.getElementById('back-btn').onclick=()=>{S.pinRole=null;S.pinVal='';S.pinErr='';render()};
+  const kpad=document.getElementById('kpad');
+  ['1','2','3','4','5','6','7','8','9','_','0','del'].forEach(k=>{
+    const b=document.createElement('button');
+    b.className='kbtn'+(k==='_'?' invis':'');
+    b.textContent=k==='del'?'⌫':k==='_'?'':k;
+    if(k!=='_') b.onclick=()=>pinPress(k);
+    kpad.appendChild(b);
+  });
 }
 
-function selectRole(role){STATE.pinRole=role;STATE.pinVal='';STATE.pinError='';render()}
-function backToRoles(){STATE.pinRole=null;STATE.pinVal='';STATE.pinError='';render()}
-function pinKey(k){
-  if(k==='del'){STATE.pinVal=STATE.pinVal.slice(0,-1);STATE.pinError='';render();return}
-  if(STATE.pinVal.length>=4)return;
-  STATE.pinVal+=k;
-  render();
-  if(STATE.pinVal.length===4){
+function pickRole(role){S.pinRole=role;S.pinVal='';S.pinErr='';render()}
+function pinPress(k){
+  if(k==='del'){S.pinVal=S.pinVal.slice(0,-1);S.pinErr='';render();return}
+  if(S.pinVal.length>=4)return;
+  S.pinVal+=k;render();
+  if(S.pinVal.length===4){
     setTimeout(()=>{
-      if(STATE.pinVal===PINS[STATE.pinRole]){
-        STATE.user={role:STATE.pinRole};STATE.pinRole=null;STATE.pinVal='';STATE.pinError='';render();
+      if(S.pinVal===PINS[S.pinRole]){
+        S.user={role:S.pinRole};S.pinRole=null;S.pinVal='';S.pinErr='';render();
       } else {
-        STATE.pinError='Wrong PIN. Try again.';STATE.pinVal='';render();
+        S.pinErr='Incorrect PIN. Try again.';S.pinVal='';render();
       }
-    },200);
+    },250);
   }
 }
 
-function attachLoginEvents(){}
-
-// ─── MAIN APP ───────────────────────────────────────
-function renderApp(){
-  const {user,tab}=STATE;
-  const tabs=user.role==='owner'
-    ?[{id:'daily',l:'Daily Entry'},{id:'summary',l:'Summary'},{id:'history',l:'History'},{id:'items',l:'Items'},{id:'monthly',l:'Monthly Exp'}]
+// ══════════════════════════════════════════
+// APP SHELL
+// ══════════════════════════════════════════
+function renderApp(app){
+  const isOwner=S.user.role==='owner';
+  const tabs=isOwner
+    ?[{id:'daily',l:'Daily Entry'},{id:'summary',l:'Summary'},{id:'history',l:'History'},{id:'items',l:'Items'},{id:'monthly',l:'Monthly Exp'},{id:'expenses',l:'Exp. Categories'}]
     :[{id:'daily',l:'Daily Entry'},{id:'summary',l:'Summary'}];
 
-  const navBtns=tabs.map(t=>`<button class="nav-btn ${tab===t.id?'on':''}" data-tab="${t.id}">${t.l}</button>`).join('');
+  const navBtns=tabs.map(t=>`<button class="nav-btn ${S.tab===t.id?'on':''}" data-tab="${t.id}">${t.l}</button>`).join('');
 
-  let pageContent='';
-  if(tab==='daily') pageContent=renderDaily();
-  else if(tab==='summary') pageContent=renderSummary();
-  else if(tab==='history') pageContent=renderHistory();
-  else if(tab==='items') pageContent=renderItems();
-  else if(tab==='monthly') pageContent=renderMonthly();
-
-  let modalHtml='';
-  if(STATE.modal==='addItem') modalHtml=renderAddItemModal();
-  else if(STATE.modal==='addMonthly') modalHtml=renderAddMonthlyModal();
-
-  return `
+  app.innerHTML=`
     <div class="hdr">
       <div class="hdr-top">
         <div class="logo">Airport <em>Bar</em></div>
-        <div class="ubadge ${user.role}" onclick="signOut()">${user.role==='owner'?'👑 Owner':'👤 Staff'} · Sign out</div>
+        <div class="ubadge ${isOwner?'owner':''}" id="sign-out-btn">${isOwner?'👑 Owner':'👤 Staff'} · Sign out</div>
       </div>
     </div>
-    <nav class="nav">${navBtns}</nav>
-    <div class="page" id="mainPage">${pageContent}</div>
-    ${modalHtml}
-  `;
+    <nav class="nav" id="main-nav">${navBtns}</nav>
+    <div class="page" id="page"></div>
+    <div id="modal-area"></div>`;
+
+  document.getElementById('sign-out-btn').onclick=()=>{S.user=null;render()};
+  document.getElementById('main-nav').querySelectorAll('.nav-btn').forEach(b=>{
+    b.onclick=()=>{S.tab=b.dataset.tab;renderPage()};
+  });
+  renderPage();
 }
 
-function attachAppEvents(){
-  document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>{
-    STATE.tab=b.dataset.tab;
-    if(b.dataset.tab==='history'){}
-    render();
-  }));
+function renderPage(){
+  const page=document.getElementById('page');
+  if(!page)return;
+  if(S.tab==='daily') renderDaily(page);
+  else if(S.tab==='summary') renderSummary(page);
+  else if(S.tab==='history') renderHistory(page);
+  else if(S.tab==='items') renderItems(page);
+  else if(S.tab==='monthly') renderMonthly(page);
+  else if(S.tab==='expenses') renderExpCats(page);
+  renderModal();
 }
 
-function signOut(){STATE.user=null;render()}
+function renderModal(){
+  const area=document.getElementById('modal-area');
+  if(!area)return;
+  if(S.modal==='addItem') buildAddItemModal(area);
+  else if(S.modal==='addMonthly') buildAddMonthlyModal(area);
+  else if(S.modal==='addExpCat') buildAddExpCatModal(area);
+  else area.innerHTML='';
+}
 
-// ─── DAILY ENTRY ───────────────────────────────────
-function renderDaily(){
-  const activeItems=STATE.items.filter(i=>i.active!==false);
-  const dateStr=STATE.date;
-  const isToday=dateStr===todayStr();
+// ══════════════════════════════════════════
+// DAILY ENTRY
+// ══════════════════════════════════════════
+function renderDaily(page){
+  const active=S.items.filter(i=>i.active!==false);
+  const isOwner=S.user.role==='owner';
 
-  let rows=activeItems.map(item=>{
-    const s=STATE.dayData?.stocks?.[item.id]||emptyStock();
-    const tagClass=item.type==='whole'?'tag-w':item.type==='decimal'?'tag-d':'tag-dr';
-    const tagLabel=item.type==='whole'?'Whole':item.type==='decimal'?'Decimal':'Draught';
+  let html=`
+  <div class="drow">
+    <span class="dlabel">Date:</span>
+    <input class="ifield" type="date" id="date-pick" value="${S.date}" max="${todayStr()}">
+    ${S.date!==todayStr()?'<span style="font-size:12px;color:var(--gold)">Editing past</span>':''}
+  </div>
+  <div class="stitle">Stock & Sales</div>
+  <div class="ssub">Enter added stock and units sold</div>`;
 
-    let inputsHtml='';
+  active.forEach(item=>{
+    const s=S.dayData?.stocks?.[item.id]||emptyStock();
+    const step=item.type==='decimal'?'0.25':'1';
+    const typeTag=item.type==='whole'?'<span class="tag tag-w">Whole</span>':item.type==='decimal'?'<span class="tag tag-d">Decimal</span>':'<span class="tag tag-dr">Draught</span>';
+
+    let inputs='';
     if(item.type!=='draught'){
-      const step=item.type==='decimal'?'0.25':'1';
-      inputsHtml=`
-        <div class="irow-flex">
-          <div class="ig"><label class="il">Added</label>
-            <input type="number" min="0" step="${step}" value="${s.added||''}" placeholder="0"
-              oninput="updateStock('${item.id}','added',this.value)" onblur="updateStock('${item.id}','added',this.value)">
-          </div>
-          <div class="ig"><label class="il">Sold</label>
-            <input type="number" min="0" step="${step}" value="${s.sold||''}" placeholder="0"
-              oninput="updateStock('${item.id}','sold',this.value)" onblur="updateStock('${item.id}','sold',this.value)">
-          </div>
-          <div class="ig"><label class="il">Closing</label>
-            <div class="ro-static">${fmtQty(s.closing)}</div>
-          </div>
-        </div>`;
+      inputs=`<div class="frow">
+        <div class="ig"><label class="il">Added</label>
+          <input class="ifield stock-input" type="number" inputmode="decimal" min="0" step="${step}" value="${s.added||''}" placeholder="0" data-id="${item.id}" data-field="added">
+        </div>
+        <div class="ig"><label class="il">Sold</label>
+          <input class="ifield stock-input" type="number" inputmode="decimal" min="0" step="${step}" value="${s.sold||''}" placeholder="0" data-id="${item.id}" data-field="sold">
+        </div>
+        <div class="ig"><label class="il">Closing</label>
+          <div class="ro" id="cl-${item.id}">${fmtQ(s.closing)}</div>
+        </div>
+      </div>`;
     } else {
       const sizeInputs=(item.draughtSizes||[]).map((sz,idx)=>`
         <div class="ig" style="margin-bottom:0">
-          <label class="il">Ksh ${sz.price} mug</label>
-          <input type="number" min="0" step="1" value="${s.draughtSold?.[idx]||''}" placeholder="0"
-            oninput="updateDraught('${item.id}',${idx},this.value)">
+          <label class="il">Ksh ${sz.price} mug (qty)</label>
+          <input class="ifield draught-input" type="number" inputmode="numeric" min="0" step="1" value="${s.draughtSold?.[idx]||''}" placeholder="0" data-id="${item.id}" data-idx="${idx}">
         </div>`).join('');
-      inputsHtml=`
-        <div class="irow-flex" style="margin-bottom:8px">
+      inputs=`
+        <div class="frow" style="margin-bottom:8px">
           <div class="ig"><label class="il">Added (kegs)</label>
-            <input type="number" min="0" step="1" value="${s.added||''}" placeholder="0"
-              oninput="updateStock('${item.id}','added',this.value)">
+            <input class="ifield stock-input" type="number" inputmode="numeric" min="0" step="1" value="${s.added||''}" placeholder="0" data-id="${item.id}" data-field="added">
           </div>
           <div class="ig"><label class="il">Closing</label>
-            <div class="ro-static">${fmtQty(s.closing)}</div>
+            <div class="ro" id="cl-${item.id}">${fmtQ(s.closing)}</div>
           </div>
         </div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Mugs sold per size:</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Mugs sold per size:</div>
         <div class="dgrid">${sizeInputs}</div>
-        ${s.draughtRevenue>0?`<div style="margin-top:8px;font-size:13px;color:var(--green)">Revenue: ${fmtMoney(s.draughtRevenue)}</div>`:''}`;
+        ${s.draughtRevenue>0?`<div style="margin-top:7px;font-size:12px;color:var(--green)">Revenue: ${fmtKsh(s.draughtRevenue)}</div>`:''}`;
     }
 
-    return `<div class="irow">
+    html+=`<div class="irow">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
-        <div>
-          <span class="iname">${item.name}</span><span class="tag ${tagClass}">${tagLabel}</span>
-          <div class="imeta" style="margin-top:3px">Opening stock: <b style="color:var(--text)">${fmtQty(s.opening)}</b></div>
+        <div><span class="iname">${item.name}</span>${typeTag}
+          <div class="imeta" style="margin-top:3px">Opening: <b style="color:var(--text)">${fmtQ(s.opening)}</b></div>
         </div>
       </div>
-      ${inputsHtml}
+      ${inputs}
     </div>`;
-  }).join('');
+  });
 
-  let expRows=FIXED_EXP.map(cat=>`
+  // EXPENSES
+  const cats=isOwner?S.dailyExpCats:DEFAULT_STAFF_EXP;
+  const expRows=cats.map(cat=>`
     <div class="exrow">
       <span class="exname">${cat}</span>
-      <span class="examt" id="examt-${cat.replace(/ /g,'_')}">${STATE.expenses[cat]?fmtMoney(STATE.expenses[cat]):''}</span>
-      <input type="number" class="exinput" min="0" step="0.01" value="${STATE.expenses[cat]||''}" placeholder="0.00"
-        oninput="updateExp('${cat}',this.value)" onblur="updateExp('${cat}',this.value)">
+      <input class="ifield exinput exp-input" type="number" inputmode="decimal" min="0" step="0.01" value="${S.expenses[cat]||''}" placeholder="0.00" data-cat="${cat}">
     </div>`).join('');
 
-  return `
-    <div class="drow">
-      <span class="dlabel">Date:</span>
-      <input type="date" value="${dateStr}" max="${todayStr()}" onchange="changeDate(this.value)">
-      ${!isToday?'<span style="font-size:12px;color:var(--gold)">Editing past</span>':''}
-    </div>
-    <div class="stitle">Stock & Sales</div>
-    <div class="ssub">Record added stock and units sold today</div>
-    ${rows||'<div class="nodata">No active items. Add items in the Items tab.</div>'}
-    <div class="div"></div>
-    <div class="stitle">Daily Expenses</div>
-    <div class="ssub">Enter today's operating costs</div>
-    <div class="card">${expRows}</div>
-    <button class="btn btn-s btn-w" onclick="confirmDay()" style="margin-top:4px">✓ Save Day Entry</button>
-    <div style="height:20px"></div>
-  `;
-}
+  html+=`
+  <div class="div"></div>
+  <div class="stitle">Daily Expenses</div>
+  <div class="ssub">Enter today's costs</div>
+  <div class="card">${expRows||'<div class="nodata">No expense categories set</div>'}</div>
+  <button class="btn btn-s btn-w" id="confirm-btn" style="margin-top:4px">✓ Save Day Entry</button>
+  <div style="height:24px"></div>`;
 
-function changeDate(val){
-  STATE.date=val;
-  loadDayData(val);
-  render();
-}
+  page.innerHTML=html;
 
-function updateStock(id,field,val){
-  if(!STATE.dayData.stocks[id]) STATE.dayData.stocks[id]=emptyStock();
-  const s=STATE.dayData.stocks[id];
-  s[field]=parseFloat(val)||0;
-  s.closing=(s.opening||0)+(s.added||0)-(s.sold||0);
-  saveDayData();
-  // Update closing display without full re-render
-  refreshClosing(id,s.closing);
-}
+  // Events — using event delegation to avoid re-render on every keystroke
+  document.getElementById('date-pick').onchange=function(){
+    S.date=this.value;loadDayData(S.date);renderPage();
+  };
 
-function refreshClosing(id,val){
-  // find ro-static in the item row — use a targeted update
-  const rows=document.querySelectorAll('.irow');
-  rows.forEach(row=>{
-    if(row.innerHTML.includes(`'${id}'`)){
-      const ro=row.querySelector('.ro-static');
-      if(ro) ro.textContent=fmtQty(val);
-    }
+  // Stock inputs — update on change without re-rendering the whole page
+  page.querySelectorAll('.stock-input').forEach(inp=>{
+    inp.addEventListener('input',function(){
+      const id=this.dataset.id,field=this.dataset.field;
+      if(!S.dayData.stocks[id])S.dayData.stocks[id]=emptyStock();
+      S.dayData.stocks[id][field]=parseFloat(this.value)||0;
+      const s=S.dayData.stocks[id];
+      s.closing=(s.opening||0)+(s.added||0)-(s.sold||0);
+      const cl=document.getElementById('cl-'+id);
+      if(cl)cl.textContent=fmtQ(s.closing);
+      saveDay();
+    });
   });
-}
 
-function updateDraught(id,sizeIdx,val){
-  if(!STATE.dayData.stocks[id]) STATE.dayData.stocks[id]=emptyStock();
-  const s=STATE.dayData.stocks[id];
-  if(!s.draughtSold) s.draughtSold={};
-  s.draughtSold[sizeIdx]=parseFloat(val)||0;
-  const item=STATE.items.find(i=>i.id===id);
-  if(item?.draughtSizes){
-    s.draughtRevenue=item.draughtSizes.reduce((a,sz,idx)=>a+(s.draughtSold[idx]||0)*sz.price,0);
-  }
-  saveDayData();
-}
-
-function updateExp(cat,val){
-  STATE.expenses[cat]=parseFloat(val)||0;
-  saveExpenses();
-}
-
-function confirmDay(){saveDayData();saveExpenses();showToast('✓ Entry saved successfully!')}
-
-// ─── SUMMARY ───────────────────────────────────────
-function renderSummary(){
-  const items=STATE.items.filter(i=>i.active!==false);
-  let totalRev=0;
-  const salesLines=[];
-  items.forEach(item=>{
-    const s=STATE.dayData?.stocks?.[item.id];
-    if(!s)return;
-    let rev=0;
-    if(item.type==='draught') rev=s.draughtRevenue||0;
-    else rev=(s.sold||0)*item.price;
-    if(rev>0){salesLines.push({name:item.name,qty:item.type==='draught'?null:s.sold,rev});totalRev+=rev;}
+  // Draught inputs
+  page.querySelectorAll('.draught-input').forEach(inp=>{
+    inp.addEventListener('input',function(){
+      const id=this.dataset.id,idx=+this.dataset.idx;
+      if(!S.dayData.stocks[id])S.dayData.stocks[id]=emptyStock();
+      const s=S.dayData.stocks[id];
+      if(!s.draughtSold)s.draughtSold={};
+      s.draughtSold[idx]=parseFloat(this.value)||0;
+      const item=S.items.find(i=>i.id===id);
+      if(item?.draughtSizes){
+        s.draughtRevenue=item.draughtSizes.reduce((a,sz,i)=>a+(s.draughtSold[i]||0)*sz.price,0);
+      }
+      saveDay();
+    });
   });
-  let totalDailyExp=0;
-  const expLines=FIXED_EXP.map(cat=>({name:cat,amt:STATE.expenses[cat]||0})).filter(e=>e.amt>0);
-  expLines.forEach(e=>totalDailyExp+=e.amt);
 
-  const meToday=STATE.monthlyExp.filter(me=>me.date===STATE.date);
-  let totalMonthly=0;
-  meToday.forEach(me=>totalMonthly+=me.amount);
+  // Expense inputs
+  page.querySelectorAll('.exp-input').forEach(inp=>{
+    inp.addEventListener('input',function(){
+      S.expenses[this.dataset.cat]=parseFloat(this.value)||0;
+      saveExp();
+    });
+  });
 
-  const totalExp=totalDailyExp+totalMonthly;
-  const profit=totalRev-totalExp;
+  document.getElementById('confirm-btn').onclick=()=>{saveDay();saveExp();showToast('✓ Entry saved!')};
+}
 
-  const salesHtml=salesLines.length?salesLines.map(l=>`
-    <div class="sumrow">
-      <span>${l.name}${l.qty!=null?' × '+fmtQty(l.qty):''}</span>
-      <span style="color:var(--gold2)">${fmtMoney(l.rev)}</span>
-    </div>`).join('')+'<div class="sumrow bold"><span>Total Revenue</span><span>'+fmtMoney(totalRev)+'</span></div>'
+// ══════════════════════════════════════════
+// SUMMARY
+// ══════════════════════════════════════════
+function renderSummary(page){
+  const {rev,exp,profit,salesLines,expLines,meToday}=calcDay(S.date,S.dayData,S.expenses);
+
+  const salesHtml=salesLines.length
+    ?salesLines.map(l=>`<div class="sumrow"><span>${l.name}${l.qty!=null?' × '+fmtQ(l.qty):''}</span><span style="color:var(--gold2)">${fmtKsh(l.rev)}</span></div>`).join('')
+      +`<div class="sumrow bold"><span>Total Revenue</span><span>${fmtKsh(rev)}</span></div>`
     :'<div class="nodata">No sales recorded</div>';
 
-  const expHtml=(expLines.length+meToday.length)?
-    expLines.map(e=>`<div class="sumrow exp"><span>${e.name}</span><span>– ${fmtMoney(e.amt)}</span></div>`).join('')+
-    meToday.map(me=>`<div class="sumrow exp"><span>${me.name} <span class="tag" style="color:var(--gold);border-color:var(--gold)">Monthly</span></span><span>– ${fmtMoney(me.amount)}</span></div>`).join('')+
-    `<div class="sumrow bold"><span>Total Expenses</span><span>– ${fmtMoney(totalExp)}</span></div>`
+  const expHtml=(expLines.length+meToday.length)
+    ?expLines.map(e=>`<div class="sumrow exp"><span>${e.name}</span><span>– ${fmtKsh(e.amt)}</span></div>`).join('')
+      +meToday.map(me=>`<div class="sumrow exp"><span>${me.name} <span class="tag" style="color:var(--gold);border-color:var(--gold)">Monthly</span></span><span>– ${fmtKsh(me.amount)}</span></div>`).join('')
+      +`<div class="sumrow bold"><span>Total Expenses</span><span>– ${fmtKsh(exp)}</span></div>`
     :'<div class="nodata">No expenses recorded</div>';
 
-  const profitClass=profit>=0?'profit':'loss';
-  const profitLabel=profit>=0?'Net Profit':'Net Loss';
-
-  const stockRows=items.map(item=>{
-    const s=STATE.dayData?.stocks?.[item.id]||emptyStock();
-    return `<div class="sumrow"><span>${item.name}</span><span style="font-size:12px;color:var(--muted)">Open ${fmtQty(s.opening)} → Close <b style="color:var(--text)">${fmtQty(s.closing)}</b></span></div>`;
+  const stockRows=S.items.filter(i=>i.active!==false).map(item=>{
+    const s=S.dayData?.stocks?.[item.id]||emptyStock();
+    return `<div class="sumrow"><span>${item.name}</span><span style="font-size:12px;color:var(--muted)">Open ${fmtQ(s.opening)} → Close <b style="color:var(--text)">${fmtQ(s.closing)}</b></span></div>`;
   }).join('');
 
-  return `
-    <div class="drow">
-      <span class="dlabel">Date:</span>
-      <input type="date" value="${STATE.date}" max="${todayStr()}" onchange="changeDate(this.value)">
-    </div>
-    <div class="stats2">
-      <div class="scard"><div class="slabel">Total Revenue</div><div class="sval gold">${fmtMoney(totalRev)}</div></div>
-      <div class="scard"><div class="slabel">Net Profit/Loss</div><div class="sval ${profit>=0?'green':'red'}">${fmtMoney(profit)}</div></div>
-    </div>
-    <div class="card"><div class="ctitle">Sales Breakdown</div>${salesHtml}</div>
-    <div class="card"><div class="ctitle">Expenses</div>${expHtml}</div>
-    <div class="card"><div class="sumrow ${profitClass}"><span>${profitLabel}</span><span>${fmtMoney(profit)}</span></div></div>
-    <div class="card"><div class="ctitle">Stock Status</div>${stockRows}</div>
-  `;
+  page.innerHTML=`
+  <div class="drow">
+    <span class="dlabel">Date:</span>
+    <input class="ifield" type="date" id="sum-date" value="${S.date}" max="${todayStr()}">
+  </div>
+  <div class="stats2">
+    <div class="scard"><div class="slabel">Total Revenue</div><div class="sval gold">${fmtKsh(rev)}</div></div>
+    <div class="scard"><div class="slabel">Net ${profit>=0?'Profit':'Loss'}</div><div class="sval ${profit>=0?'green':'red'}">${fmtKsh(profit)}</div></div>
+  </div>
+  <div class="card"><div class="ctitle">Sales Breakdown</div>${salesHtml}</div>
+  <div class="card"><div class="ctitle">Expenses</div>${expHtml}</div>
+  <div class="card"><div class="sumrow ${profit>=0?'profit':'loss'}"><span>Net ${profit>=0?'Profit':'Loss'}</span><span>${fmtKsh(profit)}</span></div></div>
+  <div class="card"><div class="ctitle">Stock Status</div>${stockRows}</div>`;
+
+  document.getElementById('sum-date').onchange=function(){S.date=this.value;loadDayData(S.date);renderPage()};
 }
 
-// ─── HISTORY ───────────────────────────────────────
-function renderHistory(){
+function calcDay(date,dayData,expenses){
+  let rev=0;
+  const salesLines=[];
+  S.items.filter(i=>i.active!==false).forEach(item=>{
+    const s=dayData?.stocks?.[item.id];if(!s)return;
+    let r=item.type==='draught'?(s.draughtRevenue||0):(s.sold||0)*item.price;
+    if(r>0){salesLines.push({name:item.name,qty:item.type==='draught'?null:s.sold,rev:r});rev+=r;}
+  });
+  const expLines=S.dailyExpCats.map(cat=>({name:cat,amt:expenses[cat]||0})).filter(e=>e.amt>0);
+  let exp=expLines.reduce((a,e)=>a+e.amt,0);
+  const meToday=S.monthlyExp.filter(me=>me.date===date);
+  meToday.forEach(me=>exp+=me.amount);
+  return{rev,exp,profit:rev-exp,salesLines,expLines,meToday};
+}
+
+// ══════════════════════════════════════════
+// HISTORY (owner: by day and month)
+// ══════════════════════════════════════════
+function renderHistory(page){
   const months=[];
   const now=new Date();
   for(let i=0;i<12;i++){
     const d=new Date(now.getFullYear(),now.getMonth()-i,1);
-    months.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'));
+    months.push(d.getFullYear()+'-'+pad(d.getMonth()+1));
   }
-  const pills=months.map(m=>`<span class="mpill ${m===STATE.histMonth?'on':''}" onclick="setHistMonth('${m}')">${new Date(m+'-15').toLocaleDateString('en-KE',{month:'short',year:'2-digit'})}</span>`).join('');
+  const pills=months.map(m=>`<span class="mpill ${m===S.histMonth?'on':''}" data-m="${m}">${new Date(m+'-15').toLocaleDateString('en-KE',{month:'short',year:'2-digit'})}</span>`).join('');
 
-  // Load days for selected month
-  const [yr,mo]=STATE.histMonth.split('-').map(Number);
+  // Load all days of selected month
+  const [yr,mo]=S.histMonth.split('-').map(Number);
   const daysInMonth=new Date(yr,mo,0).getDate();
   const records=[];
   for(let d=1;d<=daysInMonth;d++){
-    const ds=STATE.histMonth+'-'+String(d).padStart(2,'0');
+    const ds=S.histMonth+'-'+pad(d);
     const dd=DB.get('day:'+ds);
-    if(dd){
-      const ex=DB.get('expenses:'+ds)||{};
-      records.push({date:ds,dayData:dd,expenses:ex});
-    }
+    if(dd){const ex=DB.get('expenses:'+ds)||{};records.push({date:ds,dayData:dd,expenses:ex});}
   }
 
-  let monthTotals={rev:0,exp:0,profit:0};
-  const recHtml=records.length?records.map(r=>{
-    const {rev,exp,profit}=calcDaySummary(r.dayData,r.expenses,r.date);
-    monthTotals.rev+=rev;monthTotals.exp+=exp;monthTotals.profit+=profit;
+  let mTotals={rev:0,exp:0,profit:0};
+  const dayCards=records.map(r=>{
+    const {rev,exp,profit}=calcDay(r.date,r.dayData,r.expenses);
+    mTotals.rev+=rev;mTotals.exp+=exp;mTotals.profit+=profit;
     const dl=new Date(r.date+'T12:00:00').toLocaleDateString('en-KE',{weekday:'short',day:'numeric',month:'short'});
-    return `<div class="hcard">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <span style="font-weight:600">${dl}</span>
-        <span style="${profit>=0?'color:var(--green)':'color:var(--red)'};font-weight:700">${fmtMoney(profit)}</span>
+    const isExp=S.expandedHistDay===r.date;
+
+    // Build detail if expanded
+    let detail='';
+    if(isExp){
+      const {salesLines,expLines,meToday}=calcDay(r.date,r.dayData,r.expenses);
+      const sRows=salesLines.map(l=>`<div class="sumrow"><span>${l.name}${l.qty!=null?' × '+fmtQ(l.qty):''}</span><span style="color:var(--gold2)">${fmtKsh(l.rev)}</span></div>`).join('');
+      const eRows=[...expLines.map(e=>`<div class="sumrow exp"><span>${e.name}</span><span>– ${fmtKsh(e.amt)}</span></div>`),
+        ...meToday.map(me=>`<div class="sumrow exp"><span>${me.name}</span><span>– ${fmtKsh(me.amount)}</span></div>`)].join('');
+      const stRows=S.items.filter(i=>i.active!==false).map(item=>{
+        const s=r.dayData.stocks?.[item.id];if(!s)return'';
+        return`<div class="sumrow"><span>${item.name}</span><span style="font-size:11px;color:var(--muted)">O:${fmtQ(s.opening)} A:${fmtQ(s.added)} S:${fmtQ(s.sold)} C:<b style="color:var(--text)">${fmtQ(s.closing)}</b></span></div>`;
+      }).join('');
+      detail=`<div class="hcard-detail">
+        <div class="ctitle" style="margin-bottom:8px">Sales</div>${sRows||'<div class="nodata" style="padding:8px 0">None</div>'}
+        <div class="ctitle" style="margin-top:10px;margin-bottom:8px">Expenses</div>${eRows||'<div class="nodata" style="padding:8px 0">None</div>'}
+        <div class="ctitle" style="margin-top:10px;margin-bottom:8px">Stock</div>${stRows}
+      </div>`;
+    }
+
+    return `<div class="hcard ${isExp?'expanded':''}" data-date="${r.date}">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-weight:700">${dl}</span>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="font-size:12px;color:var(--muted)">Rev: ${fmtKsh(rev)}</span>
+          <span style="font-weight:700;${profit>=0?'color:var(--green)':'color:var(--red)'}">${fmtKsh(profit)}</span>
+        </div>
       </div>
-      <div style="display:flex;gap:16px;font-size:13px">
-        <span style="color:var(--gold2)">Rev: ${fmtMoney(rev)}</span>
-        <span style="color:var(--red)">Exp: ${fmtMoney(exp)}</span>
-      </div>
+      ${detail}
     </div>`;
-  }).join(''):'<div class="nodata">No records for this month</div>';
+  }).join('');
 
   const summaryHtml=records.length?`
-    <div class="card" style="margin-bottom:14px">
-      <div class="ctitle">Monthly Summary — ${STATE.histMonth}</div>
-      <div class="stats2">
-        <div class="scard"><div class="slabel">Total Revenue</div><div class="sval gold">${fmtMoney(monthTotals.rev)}</div></div>
-        <div class="scard"><div class="slabel">Net Profit</div><div class="sval ${monthTotals.profit>=0?'green':'red'}">${fmtMoney(monthTotals.profit)}</div></div>
-      </div>
-    </div>`:'';
+  <div class="card" style="margin-bottom:13px">
+    <div class="ctitle">Monthly Total — ${S.histMonth}</div>
+    <div class="stats2">
+      <div class="scard"><div class="slabel">Revenue</div><div class="sval gold">${fmtKsh(mTotals.rev)}</div></div>
+      <div class="scard"><div class="slabel">Net Profit</div><div class="sval ${mTotals.profit>=0?'green':'red'}">${fmtKsh(mTotals.profit)}</div></div>
+    </div>
+    <div class="sumrow exp"><span>Total Expenses</span><span>– ${fmtKsh(mTotals.exp)}</span></div>
+  </div>`:'';
 
-  return `
-    <div class="stitle">History</div>
-    <div class="ssub">View records by month</div>
-    <div style="margin-bottom:14px;display:flex;flex-wrap:wrap">${pills}</div>
-    ${summaryHtml}
-    ${recHtml}
-  `;
-}
+  page.innerHTML=`
+  <div class="stitle">History</div>
+  <div class="ssub">Tap a day for full breakdown</div>
+  <div style="display:flex;flex-wrap:wrap;margin-bottom:13px" id="month-pills">${pills}</div>
+  ${summaryHtml}
+  ${records.length?dayCards:'<div class="nodata">No records for this month</div>'}`;
 
-function setHistMonth(m){STATE.histMonth=m;render()}
-
-function calcDaySummary(dayData,expenses,date){
-  let rev=0;
-  STATE.items.forEach(item=>{
-    const s=dayData.stocks?.[item.id];
-    if(!s)return;
-    if(item.type==='draught') rev+=s.draughtRevenue||0;
-    else rev+=(s.sold||0)*item.price;
+  page.querySelectorAll('.mpill').forEach(p=>{
+    p.onclick=()=>{S.histMonth=p.dataset.m;S.expandedHistDay=null;renderPage()};
   });
-  let exp=Object.values(expenses).reduce((a,b)=>a+(+b||0),0);
-  const meToday=STATE.monthlyExp.filter(me=>me.date===date);
-  meToday.forEach(me=>exp+=me.amount);
-  return{rev,exp,profit:rev-exp};
+  page.querySelectorAll('.hcard').forEach(c=>{
+    c.onclick=()=>{
+      S.expandedHistDay=S.expandedHistDay===c.dataset.date?null:c.dataset.date;
+      renderPage();
+    };
+  });
 }
 
-// ─── ITEMS MANAGER ───────────────────────────────────
-let newItemForm={name:'',type:'decimal',price:'',draughtSizes:[{price:50},{price:70}]};
-
-function renderItems(){
-  const rows=STATE.items.map(item=>{
-    const tagClass=item.type==='whole'?'tag-w':item.type==='decimal'?'tag-d':'tag-dr';
-    const tagLabel=item.type==='whole'?'Whole':item.type==='decimal'?'Decimal':'Draught';
-    const meta=item.type==='draught'?`Mugs: ${item.draughtSizes?.map(s=>'Ksh '+s.price).join(', ')}`:`Ksh ${item.price} / unit`;
-    const inactiveTag=item.active===false?'<span class="tag tag-off">Inactive</span>':'';
+// ══════════════════════════════════════════
+// ITEMS MANAGER
+// ══════════════════════════════════════════
+function renderItems(page){
+  const rows=S.items.map(item=>{
+    const tc=item.type==='whole'?'tag-w':item.type==='decimal'?'tag-d':'tag-dr';
+    const tl=item.type==='whole'?'Whole':item.type==='decimal'?'Decimal':'Draught';
+    const meta=item.type==='draught'?`Mugs: ${item.draughtSizes?.map(s=>'Ksh '+s.price).join(', ')||'-'}`:`Price: Ksh ${item.price}`;
+    const offTag=item.active===false?'<span class="tag tag-off">Off</span>':'';
     return `<div class="irow" style="${item.active===false?'opacity:0.5':''}">
       <div style="display:flex;align-items:flex-start;justify-content:space-between">
-        <div style="flex:1">
-          <span class="iname">${item.name}</span><span class="tag ${tagClass}">${tagLabel}</span>${inactiveTag}
-          <div class="imeta" style="margin-top:4px">${meta}</div>
+        <div style="flex:1;min-width:0">
+          <span class="iname">${item.name}</span><span class="tag ${tc}">${tl}</span>${offTag}
+          <div class="imeta" style="margin-top:3px">${meta} · Open: ${fmtQ(item.openingStock||0)}</div>
         </div>
-        <div style="display:flex;gap:6px;margin-left:8px">
-          <button class="btn btn-g btn-sm" onclick="toggleItem('${item.id}')">${item.active===false?'Enable':'Disable'}</button>
-          <button class="btn btn-d btn-sm" onclick="removeItem('${item.id}')">✕</button>
+        <div style="display:flex;gap:5px;margin-left:8px;flex-shrink:0">
+          <button class="btn btn-g btn-sm tog-btn" data-id="${item.id}">${item.active===false?'On':'Off'}</button>
+          <button class="btn btn-d btn-sm rem-btn" data-id="${item.id}">✕</button>
         </div>
       </div>
     </div>`;
   }).join('');
 
-  return `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-      <div><div class="stitle">Items</div><div class="ssub">${STATE.items.length} items total</div></div>
-      <button class="btn btn-p btn-sm" onclick="openAddItem()">+ Add Item</button>
-    </div>
-    ${rows}
-  `;
+  page.innerHTML=`
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px">
+    <div><div class="stitle">Items</div><div class="ssub">${S.items.length} items</div></div>
+    <button class="btn btn-p btn-sm" id="add-item-btn">+ Add Item</button>
+  </div>
+  ${rows}`;
+
+  document.getElementById('add-item-btn').onclick=()=>{
+    S.newItem={name:'',type:'decimal',price:'',openingStock:'',draughtSizes:[{price:60},{price:70}]};
+    S.modal='addItem';renderModal();
+  };
+  page.querySelectorAll('.tog-btn').forEach(b=>{
+    b.onclick=()=>{
+      const it=S.items.find(i=>i.id===b.dataset.id);
+      if(it){it.active=it.active===false;DB.set('items',S.items);renderPage();}
+    };
+  });
+  page.querySelectorAll('.rem-btn').forEach(b=>{
+    b.onclick=()=>{
+      S.items=S.items.filter(i=>i.id!==b.dataset.id);
+      DB.set('items',S.items);renderPage();showToast('Item removed');
+    };
+  });
 }
 
-function renderAddItemModal(){
-  const f=newItemForm;
-  const draughtSizes=f.type==='draught'?`
-    <div class="ig">
-      <label class="il">Mug Sizes & Prices</label>
-      ${f.draughtSizes.map((sz,idx)=>`
-        <div class="irow-flex" style="margin-bottom:8px">
-          <div class="ig"><label class="il">Mug ${idx+1} price (Ksh)</label>
-            <input type="number" min="0" value="${sz.price}" oninput="updateNewDraughtSize(${idx},this.value)">
-          </div>
-          ${f.draughtSizes.length>1?`<button class="btn btn-d btn-sm" style="align-self:flex-end" onclick="removeNewDraughtSize(${idx})">✕</button>`:''}
-        </div>`).join('')}
-      ${f.draughtSizes.length<5?`<button class="btn btn-g btn-sm" onclick="addNewDraughtSize()">+ Add Size</button>`:''}
-    </div>`:'';
+// ── Add Item Modal ─────────────────────────────
+function buildAddItemModal(area){
+  const f=S.newItem;
+  const isD=f.type==='draught';
+  const priceField=!isD?`<div class="ig"><label class="il">Unit Price (Ksh)</label>
+    <input class="ifield" type="number" inputmode="decimal" id="ni-price" min="0" value="${f.price}" placeholder="0.00"></div>`:'';
+  const draughtSizes=isD?`<div class="ig"><label class="il">Mug Sizes & Prices</label>
+    ${f.draughtSizes.map((sz,idx)=>`
+      <div class="frow" style="margin-bottom:7px">
+        <div class="ig"><label class="il">Mug ${idx+1} price (Ksh)</label>
+          <input class="ifield ni-ds" type="number" inputmode="decimal" min="0" value="${sz.price}" data-idx="${idx}"></div>
+        ${f.draughtSizes.length>1?`<button class="btn btn-d btn-sm" style="align-self:flex-end" data-rem-ds="${idx}">✕</button>`:''}
+      </div>`).join('')}
+    ${f.draughtSizes.length<5?`<button class="btn btn-g btn-sm" id="add-ds-btn">+ Add Size</button>`:''}</div>`:'';
 
-  const priceField=f.type!=='draught'?`
-    <div class="ig"><label class="il">Unit Price (Ksh)</label>
-      <input type="number" min="0" value="${f.price}" placeholder="0.00" oninput="updateNewItem('price',this.value)">
-    </div>`:'';
-
-  return `<div class="overlay" onclick="if(event.target===this)closeModal()">
+  area.innerHTML=`<div class="overlay" id="modal-overlay">
     <div class="modal">
       <div class="modal-title">Add New Item</div>
       <div class="ig"><label class="il">Item Name</label>
-        <input type="text" value="${f.name}" placeholder="e.g. Tusker Lager" oninput="updateNewItem('name',this.value)">
-      </div>
+        <input class="ifield" type="text" id="ni-name" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" value="${f.name}" placeholder="e.g. Tusker, Konyagi…"></div>
       <div class="ig"><label class="il">Sell Type</label>
-        <select onchange="updateNewItem('type',this.value)">
-          <option value="whole" ${f.type==='whole'?'selected':''}>Whole bottles only (e.g. Guinness)</option>
-          <option value="decimal" ${f.type==='decimal'?'selected':''}>Decimal / quarters (e.g. spirits)</option>
-          <option value="draught" ${f.type==='draught'?'selected':''}>Draught beer (sold by mug size)</option>
-        </select>
-      </div>
+        <select class="ifield" id="ni-type">
+          <option value="decimal" ${f.type==='decimal'?'selected':''}>Decimal (halves, quarters — spirits)</option>
+          <option value="whole" ${f.type==='whole'?'selected':''}>Whole bottles only</option>
+          <option value="draught" ${f.type==='draught'?'selected':''}>Draught / Keg (sold by mug size)</option>
+        </select></div>
       ${priceField}
       ${draughtSizes}
-      <div style="display:flex;gap:10px;margin-top:16px">
-        <button class="btn btn-p btn-w" onclick="saveNewItem()">Add Item</button>
-        <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      <div class="ig"><label class="il">Opening Stock (current quantity on hand)</label>
+        <input class="ifield" type="number" inputmode="decimal" id="ni-opening" min="0" step="0.25" value="${f.openingStock}" placeholder="0"></div>
+      <div style="display:flex;gap:9px;margin-top:14px">
+        <button class="btn btn-p btn-w" id="save-item-btn">Add Item</button>
+        <button class="btn btn-g" id="close-modal-btn">Cancel</button>
       </div>
     </div>
   </div>`;
-}
 
-function openAddItem(){newItemForm={name:'',type:'decimal',price:'',draughtSizes:[{price:50},{price:70}]};STATE.modal='addItem';render()}
-function closeModal(){STATE.modal=null;render()}
-function updateNewItem(field,val){
-  newItemForm[field]=val;
-  if(field==='type'&&val==='draught'&&!newItemForm.draughtSizes.length)newItemForm.draughtSizes=[{price:50},{price:70}];
-  STATE.modal='addItem';render();
-}
-function updateNewDraughtSize(idx,val){newItemForm.draughtSizes[idx]={price:parseFloat(val)||0};STATE.modal='addItem';render()}
-function addNewDraughtSize(){newItemForm.draughtSizes.push({price:0});STATE.modal='addItem';render()}
-function removeNewDraughtSize(idx){newItemForm.draughtSizes.splice(idx,1);STATE.modal='addItem';render()}
-function saveNewItem(){
-  const f=newItemForm;
-  if(!f.name.trim()){showToast('Enter item name');return}
-  if(f.type!=='draught'&&!f.price){showToast('Enter unit price');return}
-  const item={
-    id:'item_'+Date.now(),name:f.name.trim(),type:f.type,active:true,
-    price:parseFloat(f.price)||0,
-    draughtSizes:f.type==='draught'?f.draughtSizes.map(s=>({price:parseFloat(s.price)||0})):[]
+  // CRITICAL FIX: use direct DOM input events, never re-render modal while typing name
+  const niName=document.getElementById('ni-name');
+  niName.focus();
+  // Save value on blur/change only — don't re-render on every keypress
+  niName.addEventListener('blur',()=>{S.newItem.name=niName.value});
+  niName.addEventListener('change',()=>{S.newItem.name=niName.value});
+
+  document.getElementById('ni-type').onchange=function(){
+    S.newItem.name=document.getElementById('ni-name').value;
+    S.newItem.type=this.value;
+    buildAddItemModal(area);
   };
-  STATE.items.push(item);
-  DB.set('items',STATE.items);
-  STATE.modal=null;render();showToast('✓ '+item.name+' added');
-}
-function toggleItem(id){
-  const it=STATE.items.find(i=>i.id===id);
-  if(it)it.active=it.active===false?true:false;
-  DB.set('items',STATE.items);render();
-}
-function removeItem(id){
-  STATE.items=STATE.items.filter(i=>i.id!==id);
-  DB.set('items',STATE.items);render();showToast('Item removed');
-}
 
-// ─── MONTHLY EXPENSES ───────────────────────────────
-let newMonthlyForm={name:'',amount:'',date:todayStr()};
+  const priceEl=document.getElementById('ni-price');
+  if(priceEl) priceEl.oninput=function(){S.newItem.price=this.value};
 
-function renderMonthly(){
-  const grouped={};
-  STATE.monthlyExp.forEach(e=>{
-    const m=monthOf(e.date);
-    if(!grouped[m])grouped[m]=[];
-    grouped[m].push(e);
+  const openEl=document.getElementById('ni-opening');
+  if(openEl) openEl.oninput=function(){S.newItem.openingStock=this.value};
+
+  area.querySelectorAll('.ni-ds').forEach(inp=>{
+    inp.oninput=function(){S.newItem.draughtSizes[+this.dataset.idx]={price:parseFloat(this.value)||0}};
   });
+
+  area.querySelectorAll('[data-rem-ds]').forEach(b=>{
+    b.onclick=()=>{
+      S.newItem.name=document.getElementById('ni-name').value;
+      S.newItem.draughtSizes.splice(+b.dataset.remDs,1);
+      buildAddItemModal(area);
+    };
+  });
+
+  const addDs=document.getElementById('add-ds-btn');
+  if(addDs) addDs.onclick=()=>{
+    S.newItem.name=document.getElementById('ni-name').value;
+    S.newItem.draughtSizes.push({price:0});
+    buildAddItemModal(area);
+  };
+
+  document.getElementById('modal-overlay').onclick=function(e){if(e.target===this){S.modal=null;renderModal()}};
+  document.getElementById('close-modal-btn').onclick=()=>{S.modal=null;renderModal()};
+
+  document.getElementById('save-item-btn').onclick=()=>{
+    // Read current DOM values
+    const name=(document.getElementById('ni-name').value||'').trim();
+    const type=document.getElementById('ni-type').value;
+    const priceEl=document.getElementById('ni-price');
+    const price=priceEl?parseFloat(priceEl.value)||0:0;
+    const openEl=document.getElementById('ni-opening');
+    const openingStock=openEl?parseFloat(openEl.value)||0:0;
+
+    if(!name){showToast('Enter item name');return}
+    if(type!=='draught'&&!priceEl?.value){showToast('Enter unit price');return}
+
+    const item={
+      id:'i_'+Date.now(),name,type,price,openingStock,active:true,
+      draughtSizes:type==='draught'?S.newItem.draughtSizes.map(s=>({price:parseFloat(s.price)||0})):[]
+    };
+    S.items.push(item);
+    DB.set('items',S.items);
+    // Add to today's dayData
+    if(S.dayData){
+      S.dayData.stocks[item.id]=emptyStock();
+      S.dayData.stocks[item.id].opening=openingStock;
+      S.dayData.stocks[item.id].closing=openingStock;
+      saveDay();
+    }
+    S.modal=null;
+    renderPage();
+    showToast('✓ '+name+' added');
+  };
+}
+
+// ══════════════════════════════════════════
+// EXPENSE CATEGORIES (owner)
+// ══════════════════════════════════════════
+function renderExpCats(page){
+  const rows=S.dailyExpCats.map((cat,idx)=>`
+    <div class="irow" style="display:flex;align-items:center">
+      <span style="flex:1;font-size:14px">${cat}</span>
+      ${idx>=DEFAULT_STAFF_EXP.length||!DEFAULT_STAFF_EXP.includes(cat)
+        ?`<button class="btn btn-d btn-sm rem-ecat" data-idx="${idx}">✕</button>`
+        :'<span style="font-size:11px;color:var(--muted)">Default</span>'}
+    </div>`).join('');
+
+  page.innerHTML=`
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px">
+    <div><div class="stitle">Expense Categories</div><div class="ssub">Staff sees: Lunch, Askari, Other</div></div>
+    <button class="btn btn-p btn-sm" id="add-ecat-btn">+ Add</button>
+  </div>
+  <div style="font-size:12px;color:var(--muted);margin-bottom:10px">All categories visible to owner during daily entry. Staff only sees Lunch, Askari, Other.</div>
+  ${rows}`;
+
+  document.getElementById('add-ecat-btn').onclick=()=>{S.newExpCat='';S.modal='addExpCat';renderModal()};
+  page.querySelectorAll('.rem-ecat').forEach(b=>{
+    b.onclick=()=>{
+      S.dailyExpCats.splice(+b.dataset.idx,1);
+      saveDailyExpCats();renderPage();showToast('Category removed');
+    };
+  });
+}
+
+function buildAddExpCatModal(area){
+  area.innerHTML=`<div class="overlay" id="ec-overlay">
+    <div class="modal">
+      <div class="modal-title">Add Expense Category</div>
+      <div class="ig"><label class="il">Category Name</label>
+        <input class="ifield" type="text" id="ec-name" autocomplete="off" autocapitalize="words" placeholder="e.g. Water Drum, Police Bribe…" value="${S.newExpCat}"></div>
+      <div style="display:flex;gap:9px;margin-top:14px">
+        <button class="btn btn-p btn-w" id="save-ec-btn">Add Category</button>
+        <button class="btn btn-g" id="close-ec-btn">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('ec-overlay').onclick=function(e){if(e.target===this){S.modal=null;renderModal()}};
+  document.getElementById('close-ec-btn').onclick=()=>{S.modal=null;renderModal()};
+  document.getElementById('ec-name').focus();
+  document.getElementById('save-ec-btn').onclick=()=>{
+    const name=(document.getElementById('ec-name').value||'').trim();
+    if(!name){showToast('Enter category name');return}
+    if(S.dailyExpCats.includes(name)){showToast('Already exists');return}
+    S.dailyExpCats.push(name);
+    saveDailyExpCats();S.modal=null;renderPage();showToast('✓ '+name+' added');
+  };
+}
+
+// ══════════════════════════════════════════
+// MONTHLY EXPENSES
+// ══════════════════════════════════════════
+function renderMonthly(page){
+  const grouped={};
+  S.monthlyExp.forEach(e=>{const m=monthOf(e.date);if(!grouped[m])grouped[m]=[];grouped[m].push(e)});
   const months=Object.keys(grouped).sort().reverse();
   const html=months.length?months.map(m=>{
     const label=new Date(m+'-15').toLocaleDateString('en-KE',{month:'long',year:'numeric'});
     const rows=grouped[m].map(e=>`
       <div class="irow" style="display:flex;align-items:center">
         <div style="flex:1"><div class="iname">${e.name}</div><div class="imeta">Due: ${e.date}</div></div>
-        <span style="font-weight:700;color:var(--gold2);margin-right:12px">${fmtMoney(e.amount)}</span>
-        <button class="btn btn-d btn-sm" onclick="removeMonthlyExp('${e.id}')">✕</button>
+        <span style="font-weight:700;color:var(--gold2);margin-right:10px">${fmtKsh(e.amount)}</span>
+        <button class="btn btn-d btn-sm rem-me" data-id="${e.id}">✕</button>
       </div>`).join('');
-    return `<div style="font-size:12px;color:var(--muted);font-weight:700;margin:12px 0 6px">${label}</div>${rows}`;
-  }).join(''):'<div class="nodata">No monthly expenses added</div>';
+    return `<div style="font-size:11px;color:var(--muted);font-weight:700;margin:11px 0 5px;text-transform:uppercase;letter-spacing:.06em">${label}</div>${rows}`;
+  }).join(''):'<div class="nodata">No monthly expenses yet</div>';
 
-  return `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-      <div><div class="stitle">Monthly Expenses</div><div class="ssub">DSTV, Wi-Fi, rent, etc.</div></div>
-      <button class="btn btn-p btn-sm" onclick="openAddMonthly()">+ Add</button>
-    </div>
-    ${html}
-  `;
+  page.innerHTML=`
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px">
+    <div><div class="stitle">Monthly Expenses</div><div class="ssub">DSTV, Wi-Fi, Rent, etc.</div></div>
+    <button class="btn btn-p btn-sm" id="add-me-btn">+ Add</button>
+  </div>
+  ${html}`;
+
+  document.getElementById('add-me-btn').onclick=()=>{S.newMonthly={name:'',amount:'',date:todayStr()};S.modal='addMonthly';renderModal()};
+  page.querySelectorAll('.rem-me').forEach(b=>{
+    b.onclick=()=>{S.monthlyExp=S.monthlyExp.filter(e=>e.id!==b.dataset.id);DB.set('monthly_expenses',S.monthlyExp);renderPage();showToast('Removed')};
+  });
 }
 
-function renderAddMonthlyModal(){
-  const f=newMonthlyForm;
-  return `<div class="overlay" onclick="if(event.target===this)closeModal()">
+function buildAddMonthlyModal(area){
+  const f=S.newMonthly;
+  area.innerHTML=`<div class="overlay" id="me-overlay">
     <div class="modal">
       <div class="modal-title">Add Monthly Expense</div>
       <div class="ig"><label class="il">Name (e.g. DSTV, Wi-Fi, Rent)</label>
-        <input type="text" value="${f.name}" placeholder="Expense name" oninput="updateNewMonthly('name',this.value)">
-      </div>
+        <input class="ifield" type="text" id="me-name" autocomplete="off" autocapitalize="words" placeholder="Expense name" value="${f.name}"></div>
       <div class="ig"><label class="il">Amount (Ksh)</label>
-        <input type="number" min="0" value="${f.amount}" placeholder="0.00" oninput="updateNewMonthly('amount',this.value)">
-      </div>
+        <input class="ifield" type="number" inputmode="decimal" id="me-amount" min="0" placeholder="0.00" value="${f.amount}"></div>
       <div class="ig"><label class="il">Due Date</label>
-        <input type="date" value="${f.date}" onchange="updateNewMonthly('date',this.value)">
-      </div>
-      <div style="display:flex;gap:10px;margin-top:16px">
-        <button class="btn btn-p btn-w" onclick="saveNewMonthly()">Add Expense</button>
-        <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+        <input class="ifield" type="date" id="me-date" value="${f.date}"></div>
+      <div style="display:flex;gap:9px;margin-top:14px">
+        <button class="btn btn-p btn-w" id="save-me-btn">Add Expense</button>
+        <button class="btn btn-g" id="close-me-btn">Cancel</button>
       </div>
     </div>
   </div>`;
+  document.getElementById('me-overlay').onclick=function(e){if(e.target===this){S.modal=null;renderModal()}};
+  document.getElementById('close-me-btn').onclick=()=>{S.modal=null;renderModal()};
+  document.getElementById('me-name').focus();
+  document.getElementById('save-me-btn').onclick=()=>{
+    const name=(document.getElementById('me-name').value||'').trim();
+    const amount=parseFloat(document.getElementById('me-amount').value)||0;
+    const date=document.getElementById('me-date').value;
+    if(!name||!amount){showToast('Fill in all fields');return}
+    const exp={id:'me_'+Date.now(),name,amount,date};
+    S.monthlyExp.push(exp);
+    DB.set('monthly_expenses',S.monthlyExp);
+    S.modal=null;renderPage();showToast('✓ '+name+' added');
+  };
 }
 
-function openAddMonthly(){newMonthlyForm={name:'',amount:'',date:todayStr()};STATE.modal='addMonthly';render()}
-function updateNewMonthly(field,val){newMonthlyForm[field]=val;STATE.modal='addMonthly';render()}
-function saveNewMonthly(){
-  const f=newMonthlyForm;
-  if(!f.name.trim()||!f.amount){showToast('Fill in all fields');return}
-  const exp={id:'me_'+Date.now(),name:f.name.trim(),amount:parseFloat(f.amount),date:f.date};
-  STATE.monthlyExp.push(exp);
-  DB.set('monthly_expenses',STATE.monthlyExp);
-  STATE.modal=null;render();showToast('✓ '+exp.name+' added');
-}
-function removeMonthlyExp(id){
-  STATE.monthlyExp=STATE.monthlyExp.filter(e=>e.id!==id);
-  DB.set('monthly_expenses',STATE.monthlyExp);render();showToast('Removed');
-}
-
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // START
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 init();
 </script>
 </body>
